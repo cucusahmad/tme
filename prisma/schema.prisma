@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model answer {
+  answer_id     BigInt     @id @default(autoincrement())
+  assessment_id BigInt
+  question_id   BigInt
+  answer_value  Int        @db.SmallInt
+  created_at    DateTime?  @default(now()) @db.Timestamp(6)
+  assessment    assessment @relation(fields: [assessment_id], references: [assessment_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_answer_assessment")
+  question      question   @relation(fields: [question_id], references: [question_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_answer_question")
+
+  @@unique([assessment_id, question_id], map: "uq_assessment_question")
+}
+
+model assessment {
+  assessment_id               BigInt                        @id @default(autoincrement())
+  biodata_id                  BigInt
+  status                      String                        @default("DRAFT") @db.VarChar(20)
+  started_at                  DateTime?                     @db.Timestamp(6)
+  completed_at                DateTime?                     @db.Timestamp(6)
+  created_at                  DateTime?                     @default(now()) @db.Timestamp(6)
+  answer                      answer[]
+  biodata                     biodata                       @relation(fields: [biodata_id], references: [biodata_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_assessment_biodata")
+  assessment_dimension_result assessment_dimension_result[]
+  assessment_result           assessment_result[]
+}
+
+model assessment_dimension_result {
+  assessment_dimension_id BigInt     @id(map: "assessment_dimension_pkey") @default(autoincrement())
+  assessment_id           BigInt
+  dimension_id            BigInt
+  score                   Decimal?   @db.Decimal(5, 2)
+  percentage              Decimal?   @db.Decimal(5, 2)
+  created_at              DateTime?  @default(now()) @db.Timestamp(6)
+  assessment              assessment @relation(fields: [assessment_id], references: [assessment_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_assessment_dimension_assessment")
+  dimension               dimension  @relation(fields: [dimension_id], references: [dimension_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_assessment_dimension_dimension")
+}
+
+model assessment_result {
+  assessment_result_id BigInt          @id @default(autoincrement())
+  assessment_id        BigInt
+  profession_unit_id   BigInt
+  percentage           Decimal         @db.Decimal(5, 2)
+  rank_order           Int?
+  is_recommended       Boolean?        @default(false)
+  created_at           DateTime?       @default(now()) @db.Timestamp(6)
+  assessment           assessment      @relation(fields: [assessment_id], references: [assessment_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_assessment_result_assessment")
+  profession_unit      profession_unit @relation(fields: [profession_unit_id], references: [profession_unit_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_assessment_result_profession_unit")
+}
+
+model biodata {
+  biodata_id            BigInt           @id @default(autoincrement())
+  user_id               BigInt           @unique(map: "uq_biodata_user")
+  nama_lengkap          String?          @db.VarChar(150)
+  jenis_kelamin         String?          @db.VarChar(20)
+  tempat_lahir          String?          @db.VarChar(100)
+  tanggal_lahir         DateTime?        @db.Date
+  alamat                String?
+  kabupaten_kota        String?          @db.VarChar(100)
+  provinsi              String?          @db.VarChar(100)
+  no_hp                 String?          @db.VarChar(20)
+  email                 String?          @db.VarChar(150)
+  education_level_id    BigInt?
+  jurusan               String?          @db.VarChar(150)
+  status_pekerjaan      String?          @db.VarChar(50)
+  profession_id         BigInt?
+  instansi              String?          @db.VarChar(150)
+  unit_kerja            String?          @db.VarChar(150)
+  jabatan               String?          @db.VarChar(150)
+  lama_pengalaman_kerja Int?
+  foto                  String?
+  assessment            assessment[]
+  education_level       education_level? @relation(fields: [education_level_id], references: [education_level_id], onDelete: NoAction, onUpdate: NoAction)
+  profession            profession?      @relation(fields: [profession_id], references: [profession_id], onDelete: NoAction, onUpdate: NoAction)
+  users                 users            @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_biodata_user")
+}
+
+model dimension {
+  dimension_id                BigInt                        @id @default(autoincrement())
+  profession_id               BigInt
+  dimension_name              String                        @db.VarChar(100)
+  order_no                    Int?
+  assessment_dimension_result assessment_dimension_result[]
+  profession                  profession                    @relation(fields: [profession_id], references: [profession_id], onDelete: NoAction, onUpdate: NoAction)
+  profession_unit_dimension   profession_unit_dimension[]
+  question                    question[]
+}
+
+model education_level {
+  education_level_id BigInt    @id @default(autoincrement())
+  education_name     String    @db.VarChar(100)
+  biodata            biodata[]
+}
+
+model profession {
+  profession_id   BigInt            @id @default(autoincrement())
+  profession_name String            @db.VarChar(100)
+  description     String?
+  biodata         biodata[]
+  dimension       dimension[]
+  profession_unit profession_unit[]
+}
+
+model profession_unit {
+  profession_unit_id        BigInt                      @id @default(autoincrement())
+  profession_id             BigInt
+  unit_name                 String                      @db.VarChar(100)
+  assessment_result         assessment_result[]
+  profession                profession                  @relation(fields: [profession_id], references: [profession_id], onDelete: NoAction, onUpdate: NoAction)
+  profession_unit_dimension profession_unit_dimension[]
+}
+
+model profession_unit_dimension {
+  profession_unit_dimension_id BigInt          @id @default(autoincrement())
+  profession_unit_id           BigInt
+  dimension_id                 BigInt
+  weight                       Decimal         @db.Decimal(5, 2)
+  created_at                   DateTime?       @default(now()) @db.Timestamp(6)
+  dimension                    dimension       @relation(fields: [dimension_id], references: [dimension_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_pud_dimension")
+  profession_unit              profession_unit @relation(fields: [profession_unit_id], references: [profession_unit_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_pud_profession_unit")
+
+  @@unique([profession_unit_id, dimension_id], map: "uq_profession_unit_dimension")
+}
+
+model question {
+  question_id    BigInt    @id @default(autoincrement())
+  dimension_id   BigInt
+  question       String
+  question_order Int?
+  answer         answer[]
+  dimension      dimension @relation(fields: [dimension_id], references: [dimension_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  user_id    BigInt    @id @default(autoincrement())
+  email      String    @unique @db.VarChar(150)
+  password   String    @db.VarChar(255)
+  role       String    @default("USER") @db.VarChar(20)
+  is_active  Boolean?  @default(true)
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  updated_at DateTime? @default(now()) @db.Timestamp(6)
+  biodata    biodata?
+}
