@@ -114,7 +114,7 @@ export default function Sidebar() {
           />
 
           <SidebarItem
-            href="/dashboard/Rekomendasi"
+            href="/dashboard/recommendation"
             icon={Briefcase}
             title="Rekomendasi"
             collapsed={collapsed}

@@ -18,12 +18,14 @@ model answer {
   question      question   @relation(fields: [question_id], references: [question_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_answer_question")
 
   @@unique([assessment_id, question_id], map: "uq_assessment_question")
+  @@index([assessment_id], map: "idx_answer_assessment")
+  @@index([question_id], map: "idx_answer_question")
 }
 
 model assessment {
   assessment_id               BigInt                        @id @default(autoincrement())
   biodata_id                  BigInt
-  status                      String                        @default("DRAFT") @db.VarChar(20)
+  status                      String?                       @default("DRAFT") @db.VarChar(20)
   started_at                  DateTime?                     @db.Timestamp(6)
   completed_at                DateTime?                     @db.Timestamp(6)
   created_at                  DateTime?                     @default(now()) @db.Timestamp(6)
@@ -31,10 +33,12 @@ model assessment {
   biodata                     biodata                       @relation(fields: [biodata_id], references: [biodata_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_assessment_biodata")
   assessment_dimension_result assessment_dimension_result[]
   assessment_result           assessment_result[]
+
+  @@index([biodata_id], map: "idx_assessment_biodata")
 }
 
 model assessment_dimension_result {
-  assessment_dimension_id BigInt     @id(map: "assessment_dimension_pkey") @default(autoincrement())
+  assessment_dimension_id BigInt     @id @default(autoincrement())
   assessment_id           BigInt
   dimension_id            BigInt
   score                   Decimal?   @db.Decimal(5, 2)
@@ -42,6 +46,9 @@ model assessment_dimension_result {
   created_at              DateTime?  @default(now()) @db.Timestamp(6)
   assessment              assessment @relation(fields: [assessment_id], references: [assessment_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_assessment_dimension_assessment")
   dimension               dimension  @relation(fields: [dimension_id], references: [dimension_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_assessment_dimension_dimension")
+
+  @@index([assessment_id], map: "idx_assessment_dimension_assessment")
+  @@index([dimension_id], map: "idx_assessment_dimension_dimension")
 }
 
 model assessment_result {
@@ -54,33 +61,40 @@ model assessment_result {
   created_at           DateTime?       @default(now()) @db.Timestamp(6)
   assessment           assessment      @relation(fields: [assessment_id], references: [assessment_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_assessment_result_assessment")
   profession_unit      profession_unit @relation(fields: [profession_unit_id], references: [profession_unit_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_assessment_result_profession_unit")
+
+  @@index([assessment_id], map: "idx_assessment_result_assessment")
+  @@index([profession_unit_id], map: "idx_assessment_result_profession_unit")
 }
 
 model biodata {
-  biodata_id            BigInt           @id @default(autoincrement())
-  user_id               BigInt           @unique(map: "uq_biodata_user")
-  nama_lengkap          String?          @db.VarChar(150)
-  jenis_kelamin         String?          @db.VarChar(20)
-  tempat_lahir          String?          @db.VarChar(100)
-  tanggal_lahir         DateTime?        @db.Date
-  alamat                String?
-  kabupaten_kota        String?          @db.VarChar(100)
-  provinsi              String?          @db.VarChar(100)
-  no_hp                 String?          @db.VarChar(20)
-  email                 String?          @db.VarChar(150)
-  education_level_id    BigInt?
-  jurusan               String?          @db.VarChar(150)
-  status_pekerjaan      String?          @db.VarChar(50)
-  profession_id         BigInt?
-  instansi              String?          @db.VarChar(150)
-  unit_kerja            String?          @db.VarChar(150)
-  jabatan               String?          @db.VarChar(150)
-  lama_pengalaman_kerja Int?
-  foto                  String?
-  assessment            assessment[]
-  education_level       education_level? @relation(fields: [education_level_id], references: [education_level_id], onDelete: NoAction, onUpdate: NoAction)
-  profession            profession?      @relation(fields: [profession_id], references: [profession_id], onDelete: NoAction, onUpdate: NoAction)
-  users                 users            @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_biodata_user")
+  biodata_id                   BigInt                        @id @default(autoincrement())
+  user_id                      BigInt                        @unique
+  nama_lengkap                 String?                       @db.VarChar(150)
+  jenis_kelamin                String?                       @db.VarChar(20)
+  tempat_lahir                 String?                       @db.VarChar(100)
+  tanggal_lahir                DateTime?                     @db.Date
+  alamat                       String?
+  kabupaten_kota               String?                       @db.VarChar(100)
+  provinsi                     String?                       @db.VarChar(100)
+  no_hp                        String?                       @db.VarChar(20)
+  email                        String?                       @db.VarChar(150)
+  education_level_id           BigInt?
+  jurusan                      String?                       @db.VarChar(150)
+  status_pekerjaan             String?                       @db.VarChar(50)
+  profession_id                BigInt?
+  instansi                     String?                       @db.VarChar(150)
+  unit_kerja                   String?                       @db.VarChar(150)
+  jabatan                      String?                       @db.VarChar(150)
+  lama_pengalaman_kerja        Int?
+  foto                         String?
+  assessment                   assessment[]
+  assessment_ai_recommendation assessment_ai_recommendation?
+  education_level              education_level?              @relation(fields: [education_level_id], references: [education_level_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_biodata_education")
+  profession                   profession?                   @relation(fields: [profession_id], references: [profession_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_biodata_profession")
+  users                        users                         @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_biodata_user")
+
+  @@index([profession_id], map: "idx_biodata_profession")
+  @@index([user_id], map: "idx_biodata_user")
 }
 
 model dimension {
@@ -89,9 +103,11 @@ model dimension {
   dimension_name              String                        @db.VarChar(100)
   order_no                    Int?
   assessment_dimension_result assessment_dimension_result[]
-  profession                  profession                    @relation(fields: [profession_id], references: [profession_id], onDelete: NoAction, onUpdate: NoAction)
+  profession                  profession                    @relation(fields: [profession_id], references: [profession_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_dimension_profession")
   profession_unit_dimension   profession_unit_dimension[]
   question                    question[]
+
+  @@index([profession_id], map: "idx_dimension_profession")
 }
 
 model education_level {
@@ -114,8 +130,10 @@ model profession_unit {
   profession_id             BigInt
   unit_name                 String                      @db.VarChar(100)
   assessment_result         assessment_result[]
-  profession                profession                  @relation(fields: [profession_id], references: [profession_id], onDelete: NoAction, onUpdate: NoAction)
+  profession                profession                  @relation(fields: [profession_id], references: [profession_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_profession_unit_profession")
   profession_unit_dimension profession_unit_dimension[]
+
+  @@index([profession_id], map: "idx_profession_unit_profession")
 }
 
 model profession_unit_dimension {
@@ -128,6 +146,8 @@ model profession_unit_dimension {
   profession_unit              profession_unit @relation(fields: [profession_unit_id], references: [profession_unit_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_pud_profession_unit")
 
   @@unique([profession_unit_id, dimension_id], map: "uq_profession_unit_dimension")
+  @@index([dimension_id], map: "idx_pud_dimension")
+  @@index([profession_unit_id], map: "idx_pud_profession_unit")
 }
 
 model question {
@@ -136,7 +156,9 @@ model question {
   question       String
   question_order Int?
   answer         answer[]
-  dimension      dimension @relation(fields: [dimension_id], references: [dimension_id], onDelete: NoAction, onUpdate: NoAction)
+  dimension      dimension @relation(fields: [dimension_id], references: [dimension_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_question_dimension")
+
+  @@index([dimension_id], map: "idx_question_dimension")
 }
 
 model users {
@@ -148,4 +170,18 @@ model users {
   created_at DateTime? @default(now()) @db.Timestamp(6)
   updated_at DateTime? @default(now()) @db.Timestamp(6)
   biodata    biodata?
+}
+
+model assessment_ai_recommendation {
+  ai_recommendation_id         BigInt    @id @default(autoincrement())
+  biodata_id                   BigInt    @unique
+  top_5_development_priorities Json
+  development_recommendation   Json
+  individual_career_roadmap    Json
+  individual_development_plan  Json
+  recommended_learning_path    Json
+  recommended_learning_place   Json
+  personal_commitment          Json
+  created_at                   DateTime? @default(now()) @db.Timestamp(6)
+  biodata                      biodata   @relation(fields: [biodata_id], references: [biodata_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_ai_rec_biodata")
 }
