@@ -291,6 +291,7 @@ for (let i = 0; i < ranking.length; i++) {
 |--------------------------------------------------------------------------
 */
 export async function getAssessmentResult(assessmentId: bigint) {
+  // 1. Ambil semua data hasil assessment beserta relasi profesinya
   const results = await prisma.assessment_result.findMany({
     where: {
       assessment_id: assessmentId,
@@ -303,13 +304,38 @@ export async function getAssessmentResult(assessmentId: bigint) {
     },
   });
 
-  // Konversi tipe Decimal menjadi number biasa Javascript agar bisa di-render Chart/UI
-  return results.map((item) => ({
-    ...item,
-    percentage: Number(item.percentage),
-  }));
-}
+  // 2. Gabungkan data berdasarkan profession_unit_id untuk mencari rata-rata
+  const aggregatedMap = results.reduce((acc, item) => {
+    // Pastikan key berupa string (aman untuk BigInt/Int)
+    const profId = item.profession_unit_id.toString(); 
 
+    if (!acc[profId]) {
+      // Jika profesi belum ada di map, inisialisasi
+      acc[profId] = {
+        ...item,
+        percentageTotal: Number(item.percentage),
+        count: 1,
+      };
+    } else {
+      // Jika profesi sudah ada, akumulasikan nilai persentase dan naikkan counter
+      acc[profId].percentageTotal += Number(item.percentage);
+      acc[profId].count += 1;
+    }
+
+    return acc;
+  }, {} as Record<string, any>);
+
+  // 3. Hitung rata-rata nilainya dan kembalikan dalam bentuk Array
+  return Object.values(aggregatedMap).map((item) => {
+    const { percentageTotal, count, ...rest } = item;
+
+    return {
+      ...rest,
+      // Overwrite nilai percentage dengan hasil rata-rata
+      percentage: percentageTotal / count, 
+    };
+  });
+}
 /*
 |--------------------------------------------------------------------------
 | Ambil Rekomendasi Terbaik (Sudah Diperbaiki)
@@ -340,15 +366,33 @@ export async function getBestRecommendation(assessmentId: bigint) {
 |--------------------------------------------------------------------------
 */
 export async function getDimensionResult(assessmentId: bigint) {
-  const dimensionResults = await prisma.assessment_dimension_result.findMany({
+  // 1. Ambil rata-rata dikelompokkan berdasarkan dimension_id
+  const aggregations = await prisma.assessment_dimension_result.groupBy({
+    by: ['dimension_id'],
     where: { assessment_id: assessmentId },
-    include: { dimension: true },
+    _avg: {
+      score: true,
+      percentage: true,
+    },
     orderBy: { dimension_id: "asc" },
   });
 
-  return dimensionResults.map((item) => ({
-    ...item,
-    score: Number(item.score),
-    percentage: Number(item.percentage),
-  }));
+  // 2. Ambil data master dimensi berdasarkan id yang unik
+  const dimensionIds = aggregations.map(a => a.dimension_id);
+  const dimensions = await prisma.dimension.findMany({
+    where: { 
+      dimension_id: { in: dimensionIds } // <-- Sudah diganti menggunakan 'dimension_id'
+    },
+  });
+
+  // 3. Gabungkan data rata-rata dengan detail nama dimensi untuk Radar Chart
+  return aggregations.map((item) => {
+    const dimDetail = dimensions.find(d => d.dimension_id === item.dimension_id);
+    return {
+      dimension_id: item.dimension_id,
+      dimension: dimDetail || null,
+      score: item._avg.score ? Number(item._avg.score) : 0,
+      percentage: item._avg.percentage ? Number(item._avg.percentage) : 0,
+    };
+  });
 }

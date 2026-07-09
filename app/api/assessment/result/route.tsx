@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
 
     if (!biodata) return failed("Biodata tidak ditemukan.", 400);
 
-    // 2. Ambil AMAN: Cari langsung data dimensi berdasarkan assessment terbaru milik biodata_id ini
+    // 2. Ambil data dimensi berdasarkan biodata_id ini
     const rawDimensions = await prisma.assessment_dimension_result.findMany({
       where: {
         assessment: {
@@ -36,11 +36,11 @@ export async function GET(request: NextRequest) {
         dimension: true,
       },
       orderBy: {
-        created_at: "desc" // Mengambil data yang paling baru diisi
+        created_at: "desc"
       }
     });
 
-    // 3. Ambil AMAN: Cari data ranking berdasarkan biodata_id ini
+    // 3. Ambil data ranking berdasarkan biodata_id ini
     const rawRanking = await prisma.assessment_result.findMany({
       where: {
         assessment: {
@@ -54,47 +54,105 @@ export async function GET(request: NextRequest) {
         rank_order: "asc",
       },
     });
-
-    // Jika setelah di-bypass ternyata database pusat Anda memang kosong melompong
+    
     if (rawDimensions.length === 0) {
       return success({ recommendation: null, ranking: [], dimensions: [] }, "Data di database kosong.");
     }
 
     /*
     |--------------------------------------------------------------------------
-    | PARSING DATA MENJADI STRING & NUMBER (ANTI-LOSS DATA)
+    | AGREGASI & DISTINCT DIMENSIONS (MENGHITUNG RATA-RATA & MENGHAPUS DUPLIKAT)
     |--------------------------------------------------------------------------
     */
-    const dimensions = rawDimensions.map((item) => ({
-      assessment_dimension_id: item.assessment_dimension_id.toString(),
-      assessment_id: item.assessment_id.toString(),
-      dimension_id: item.dimension_id.toString(),
-      score: item.score ? Number(item.score) : 0,
-      percentage: item.percentage ? Number(item.percentage) : 0,
-      created_at: item.created_at,
-      dimension: {
-        dimension_id: item.dimension.dimension_id.toString(),
-        profession_id: item.dimension.profession_id.toString(),
-        dimension_name: item.dimension.dimension_name,
-        order_no: item.dimension.order_no,
-      },
-    }));
+    const aggregatedDimensionsMap = rawDimensions.reduce((acc, item) => {
+      const dimId = item.dimension_id.toString();
 
-    const ranking = rawRanking.map((item) => ({
-      assessment_result_id: item.assessment_result_id.toString(),
-      assessment_id: item.assessment_id.toString(),
-      profession_unit_id: item.profession_unit_id.toString(),
-      percentage: item.percentage ? Number(item.percentage) : 0,
-      rank_order: item.rank_order,
-      is_recommended: item.is_recommended,
-      created_at: item.created_at,
-      profession_unit: {
-        profession_unit_id: item.profession_unit.profession_unit_id.toString(),
-        profession_id: item.profession_unit.profession_id.toString(),
-        unit_name: item.profession_unit.unit_name,
-      },
-    }));
+      if (!acc[dimId]) {
+        acc[dimId] = {
+          assessment_dimension_id: item.assessment_dimension_id.toString(),
+          assessment_id: item.assessment_id.toString(),
+          dimension_id: dimId,
+          scoreTotal: item.score ? Number(item.score) : 0,
+          percentageTotal: item.percentage ? Number(item.percentage) : 0,
+          count: 1,
+          created_at: item.created_at,
+          dimension: {
+            dimension_id: item.dimension.dimension_id.toString(),
+            profession_id: item.dimension.profession_id.toString(),
+            dimension_name: item.dimension.dimension_name,
+            order_no: item.dimension.order_no,
+          },
+        };
+      } else {
+        acc[dimId].scoreTotal += item.score ? Number(item.score) : 0;
+        acc[dimId].percentageTotal += item.percentage ? Number(item.percentage) : 0;
+        acc[dimId].count += 1;
+      }
+      return acc;
+    }, {} as Record<string, any>);
 
+    const dimensions = Object.values(aggregatedDimensionsMap).map((item) => {
+      const { scoreTotal, percentageTotal, count, ...rest } = item;
+      return {
+        ...rest,
+        score: scoreTotal / count,
+        percentage: percentageTotal / count,
+      };
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | AGREGASI & DISTINCT RANKING (PROSES UTAMA PERBAIKAN)
+    |--------------------------------------------------------------------------
+    */
+    const aggregatedRankingMap = rawRanking.reduce((acc, item) => {
+      const profUnitId = item.profession_unit_id.toString();
+
+      if (!acc[profUnitId]) {
+        acc[profUnitId] = {
+          assessment_result_id: item.assessment_result_id.toString(),
+          assessment_id: item.assessment_id.toString(),
+          profession_unit_id: profUnitId,
+          percentageTotal: item.percentage ? Number(item.percentage) : 0,
+          count: 1,
+          created_at: item.created_at,
+          profession_unit: {
+            profession_unit_id: item.profession_unit.profession_unit_id.toString(),
+            profession_id: item.profession_unit.profession_id.toString(),
+            unit_name: item.profession_unit.unit_name,
+          },
+        };
+      } else {
+        acc[profUnitId].percentageTotal += item.percentage ? Number(item.percentage) : 0;
+        acc[profUnitId].count += 1;
+      }
+      return acc;
+    }, {} as Record<string, any>);
+
+    // 1. Ubah menjadi Array sekaligus hitung rata-rata persentasenya
+    let ranking = Object.values(aggregatedRankingMap).map((item) => {
+      const { percentageTotal, count, ...rest } = item;
+      return {
+        ...rest,
+        percentage: Number((percentageTotal / count).toFixed(2)), // Batasi 2 desimal
+      };
+    });
+
+    // 2. URUTKAN: Dari nilai percentage tertinggi ke terendah (descending)
+    ranking.sort((a, b) => b.percentage - a.percentage);
+
+    // 3. RE-INDEX RANK_ORDER: Buat nomor peringkat baru berurutan dari 1 agar tidak duplikat
+    ranking = ranking.map((item, index) => {
+      const currentRank = index + 1;
+      return {
+        ...item,
+        rank_order: currentRank,
+        is_recommended: currentRank === 1, // Otomatis peringkat #1 menjadi Direkomendasikan
+      };
+    });
+
+    // Ambil item rekomendasi teratas (peringkat 1 hasil rata-rata terbaru)
     const recommendation = ranking.find((item) => item.is_recommended === true) || null;
 
     return success(
@@ -103,7 +161,7 @@ export async function GET(request: NextRequest) {
         ranking,
         dimensions,
       },
-      "Berhasil mengambil hasil assessment lewat jalur bypass."
+      "Berhasil mengambil hasil assessment unik dengan nilai rata-rata terurut."
     );
 
   } catch (error: any) {
