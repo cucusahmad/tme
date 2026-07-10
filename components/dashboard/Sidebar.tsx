@@ -121,9 +121,9 @@ export default function Sidebar() {
           />
 
           <SidebarItem
-            href="/dashboard/roadmap"
+            href="/dashboard/training"
             icon={Target}
-            title="Roadmap Karier"
+            title="Training dan Workshop"
             collapsed={collapsed}
           />
 
