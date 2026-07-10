@@ -132,13 +132,7 @@ export default function Sidebar() {
         {/* Bottom */}
 
         <div className="space-y-2 border-t border-slate-200 p-4">
-
-          <SidebarItem
-            href="/dashboard/settings"
-            icon={Settings}
-            title="Pengaturan"
-            collapsed={collapsed}
-          />
+        
 
           <SidebarItem
             href="/"

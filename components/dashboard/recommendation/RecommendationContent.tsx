@@ -152,23 +152,158 @@ export default function RecommendationContent({ recommendation }: Recommendation
           </div>
         )}
 
-        {/* 6. LEARNING PLACE */}
-        {tab === "place" && (
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold text-slate-800 mb-4">Recommended Learning Place</h2>
-            {recommendation.recommended_learning_place?.map((item, index) => (
-              <div key={index} className="p-5 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-lg font-semibold text-slate-800">🏢 {item.name}</h3>
-                  <span className="text-xs bg-slate-200 text-slate-700 font-medium px-2.5 py-1 rounded-full">
-                    {item.type}
-                  </span>
-                </div>
-                <p className="text-sm text-slate-500 mt-2">💡 <span className="font-medium">Alasan:</span> {item.reason}</p>
-              </div>
-            ))}
+       {/* 6. LEARNING PLACE */}
+
+{tab === "place" && (
+  <div className="space-y-5">
+
+    <h2 className="mb-6 text-2xl font-bold text-slate-800">
+      Recommended Learning Place
+    </h2>
+
+    {recommendation.recommended_learning_place?.map(
+      (item: any, index: number) => (
+
+        <div
+          key={index}
+          className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+        >
+
+          <div className="flex flex-wrap items-center justify-between gap-3">
+
+            <div>
+
+              <h3 className="text-xl font-bold text-slate-800">
+
+                {item.category === "University"
+                  ? "🎓"
+                  : "💻"}{" "}
+
+                {item.name}
+
+              </h3>
+
+              <p className="mt-1 text-sm text-slate-500">
+
+                {item.type}
+
+              </p>
+
+            </div>
+
+            <span
+              className={`rounded-full px-3 py-1 text-sm font-semibold ${
+                item.category === "University"
+                  ? "bg-blue-100 text-blue-700"
+                  : "bg-cyan-100 text-cyan-700"
+              }`}
+            >
+              {item.category}
+            </span>
+
           </div>
-        )}
+
+          {/* University */}
+
+          {item.category === "University" && (
+
+            <div className="mt-5 grid gap-3 md:grid-cols-3">
+
+              <div>
+
+                <p className="text-xs font-semibold uppercase text-slate-500">
+
+                  Faculty
+
+                </p>
+
+                <p className="font-medium text-slate-800">
+
+                  {item.faculty}
+
+                </p>
+
+              </div>
+
+              <div>
+
+                <p className="text-xs font-semibold uppercase text-slate-500">
+
+                  Study Program
+
+                </p>
+
+                <p className="font-medium text-slate-800">
+
+                  {item.study_program}
+
+                </p>
+
+              </div>
+
+              <div>
+
+                <p className="text-xs font-semibold uppercase text-slate-500">
+
+                  Degree
+
+                </p>
+
+                <p className="font-medium text-slate-800">
+
+                  {item.degree}
+
+                </p>
+
+              </div>
+
+            </div>
+
+          )}
+
+          {/* Online */}
+
+          {item.category === "Online" &&
+            item.url && (
+
+              <div className="mt-5">
+
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex rounded-xl bg-cyan-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan-700"
+                >
+                  Visit Platform
+                </a>
+
+              </div>
+
+            )}
+
+          <div className="mt-5 rounded-xl bg-slate-50 p-4">
+
+            <p className="text-sm leading-7 text-slate-700">
+
+              <span className="font-semibold">
+                💡 Recommendation Reason:
+              </span>
+
+              {" "}
+
+              {item.reason}
+
+            </p>
+
+          </div>
+
+        </div>
+
+      )
+    )}
+
+  </div>
+)}
 
         {/* 7. COMMITMENT */}
         {tab === "commitment" && (
