@@ -10,7 +10,6 @@ import {
   Briefcase,
   BarChart3,
   Target,
-  Settings,
   LogOut,
   Brain,
   X,
@@ -43,19 +42,14 @@ const menus = [
     icon: BarChart3,
   },
   {
-    title: "Profesi",
-    href: "/dashboard/profession",
+    title: "Rekomendasi",
+    href: "/dashboard/recommendation",
     icon: Briefcase,
   },
   {
-    title: "Roadmap Karier",
-    href: "/dashboard/roadmap",
+    title: "Training dan Workshop",
+    href: "/dashboard/training",
     icon: Target,
-  },
-  {
-    title: "Pengaturan",
-    href: "/dashboard/settings",
-    icon: Settings,
   },
 ];
 
@@ -136,7 +130,9 @@ export default function MobileSidebar({
             const Icon = menu.icon;
 
             const active =
-              pathname === menu.href;
+              pathname === menu.href ||
+              (menu.href !== "/dashboard" &&
+                pathname.startsWith(menu.href));
 
             return (
 
@@ -169,7 +165,9 @@ export default function MobileSidebar({
 
         <div className="absolute bottom-0 left-0 w-full border-t border-slate-200 p-5">
 
-          <button
+          <Link
+            href="/"
+            onClick={onClose}
             className="
             flex
             w-full
@@ -190,7 +188,7 @@ export default function MobileSidebar({
 
             Logout
 
-          </button>
+          </Link>
 
         </div>
 

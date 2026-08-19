@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import axios from "axios";
 import api from "@/lib/api";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -16,22 +17,8 @@ export default function AssessmentCard() {
   const [submitting, setSubmitting] = useState(false); // State untuk loading saat klik tombol finish
   const [question, setQuestion] = useState<any>(null);
   const [progress, setProgress] = useState<any>(null);
-  const [assessment, setAssessment] = useState<any>(null);
-
-  useEffect(() => {
-    startAssessment();
-  }, []);
-
-  async function startAssessment() {
-    try {
-      await api.post("/assessment/start");
-      await loadQuestion();
-    } catch (error) {
-      console.error(error);
-      toast.error("Gagal memulai assessment.");
-      setLoading(false);
-    }
-  }
+  const [, setAssessment] = useState<any>(null);
+  const [startError, setStartError] = useState<string | null>(null);
 
   async function loadQuestion() {
     try {
@@ -46,6 +33,39 @@ export default function AssessmentCard() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    async function startAssessment() {
+      try {
+        const profileResponse = await api.get("/profile");
+        const profile = profileResponse.data.data;
+
+        if (!profile) {
+          setStartError("Lengkapi biodata terlebih dahulu sebelum memulai assessment.");
+          return;
+        }
+
+        if (!profile.profession_id) {
+          setStartError("Pilih profesi pada biodata terlebih dahulu sebelum memulai assessment.");
+          return;
+        }
+
+        await api.post("/assessment/start");
+        await loadQuestion();
+      } catch (error) {
+        console.error(error);
+        const message = axios.isAxiosError(error)
+          ? error.response?.data?.message
+          : null;
+
+        setStartError(message || "Gagal memulai assessment.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    void startAssessment();
+  }, []);
 
   async function handleAnswer(value: number) {
     try {
@@ -87,6 +107,24 @@ export default function AssessmentCard() {
     return (
       <div className="rounded-3xl bg-white p-10 shadow text-center font-medium text-slate-600">
         Memuat Assessment...
+      </div>
+    );
+  }
+
+  if (startError) {
+    return (
+      <div className="mx-auto max-w-2xl rounded-3xl bg-white p-10 text-center shadow-xl">
+        <h2 className="text-2xl font-bold text-slate-800">
+          Assessment Belum Dapat Dimulai
+        </h2>
+        <p className="mt-3 text-slate-500">{startError}</p>
+        <button
+          type="button"
+          onClick={() => router.push("/dashboard/profile")}
+          className="mt-6 rounded-xl bg-blue-600 px-8 py-3 font-semibold text-white shadow-md transition hover:bg-blue-700"
+        >
+          Lengkapi Biodata
+        </button>
       </div>
     );
   }

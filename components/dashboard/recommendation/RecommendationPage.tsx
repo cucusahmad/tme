@@ -19,10 +19,6 @@ export default function RecommendationPage() {
   const [recommendation, setRecommendation] =
     useState<any>(null);
 
-  useEffect(() => {
-    loadRecommendation();
-  }, []);
-
   async function loadRecommendation() {
     try {
 
@@ -45,6 +41,23 @@ export default function RecommendationPage() {
 
     }
   }
+
+  useEffect(() => {
+    let active = true;
+
+    api.get("/assessment/recommendation")
+      .then((res) => {
+        if (active) setRecommendation(res.data.data);
+      })
+      .catch(console.error)
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   async function generateAI() {
 

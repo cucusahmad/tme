@@ -17,9 +17,8 @@ export default function Navbar({ onOpenSidebar }: Props) {
     if (pathname.startsWith("/dashboard/profile")) return "Biodata";
     if (pathname.startsWith("/dashboard/assessment")) return "Assessment";
     if (pathname.startsWith("/dashboard/result")) return "Hasil Assessment";
-    if (pathname.startsWith("/dashboard/profession")) return "Profesi";
-    if (pathname.startsWith("/dashboard/roadmap")) return "Roadmap Karier";
-    if (pathname.startsWith("/dashboard/settings")) return "Pengaturan";
+    if (pathname.startsWith("/dashboard/recommendation")) return "Rekomendasi";
+    if (pathname.startsWith("/dashboard/training")) return "Training dan Workshop";
     return "Dashboard";
   }, [pathname]);
 

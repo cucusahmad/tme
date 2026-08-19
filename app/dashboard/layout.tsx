@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 import Sidebar from "@/components/dashboard/Sidebar";
 import Navbar from "@/components/dashboard/Navbar";
@@ -13,6 +14,11 @@ export default function DashboardLayout({
 }>) {
   const [openSidebar, setOpenSidebar] =
     useState(false);
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/dashboard/admin")) {
+    return children;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50">

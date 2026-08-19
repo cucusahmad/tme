@@ -314,7 +314,7 @@ export default function RecommendationContent({ recommendation }: Recommendation
                 🤝 {recommendation.personal_commitment?.title}
               </h3>
               <p className="text-slate-600 text-sm italic leading-relaxed">
-                "{recommendation.personal_commitment?.statement}"
+                &ldquo;{recommendation.personal_commitment?.statement}&rdquo;
               </p>
             </div>
           </div>

@@ -44,14 +44,8 @@ export default function BiodataForm() {
   });
 
   useEffect(() => {
-
-    loadData();
-
-  }, []);
-
-  async function loadData() {
-
-    try {
+    async function loadData() {
+      try {
 
       const [
         profile,
@@ -85,13 +79,13 @@ export default function BiodataForm() {
         "Gagal mengambil data."
       );
 
-    } finally {
-
-      setLoading(false);
-
+      } finally {
+        setLoading(false);
+      }
     }
 
-  }
+    void loadData();
+  }, [reset]);
 
   async function onSubmit(
     data: BiodataInput
@@ -514,7 +508,7 @@ focus:border-cyan-500
                 value ? Number(value) : null,
             })}
             className="
-w-fullh
+w-full
 rounded-xl
 border
 border-slate-300

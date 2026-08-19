@@ -32,11 +32,15 @@ export async function POST(request: NextRequest) {
 
     const userId = getUserId(request);
 
-    const biodata = await prisma.biodata.findUnique({
-      where: {
-        user_id: userId,
-      },
-    });
+  const biodata = await prisma.biodata.findUnique({
+  where: {
+    user_id: userId,
+  },
+  include: {
+    education_level: true,
+    profession: true,
+  },
+});
 
     if (!biodata) {
       return NextResponse.json(
@@ -112,30 +116,36 @@ export async function POST(request: NextRequest) {
     */
 
     const assessmentData = {
-      top_profession_units: ranking
-        .slice(0, 3)
-        .map((item) => ({
-          profession_unit:
-            item.profession_unit.unit_name,
+  profile: {
+    education_level:
+      biodata.education_level?.education_name ?? "",
 
-          percentage: Number(
-            item.percentage
-          ),
-        })),
+    major:
+      biodata.jurusan ?? "",
 
-      dimensions: dimensions.map(
-        (item) => ({
-          dimension:
-            item.dimension.dimension_name,
+    work_unit:
+      biodata.unit_kerja ?? "",
 
-          score: Number(item.score),
+    position:
+      biodata.jabatan ?? "",
 
-          percentage: Number(
-            item.percentage
-          ),
-        })
-      ),
-    };
+    work_experience:
+      biodata.lama_pengalaman_kerja ?? 0,
+  },
+
+  top_profession_units: ranking
+    .slice(0, 3)
+    .map((item) => ({
+      profession_unit: item.profession_unit.unit_name,
+      percentage: Number(item.percentage),
+    })),
+
+  dimensions: dimensions.map((item) => ({
+    dimension: item.dimension.dimension_name,
+    score: Number(item.score),
+    percentage: Number(item.percentage),
+  })),
+};
 
     /*
     |--------------------------------------------------------------------------
@@ -144,37 +154,44 @@ export async function POST(request: NextRequest) {
     */
 
     const prompt = `
+Anda adalah AI Career Consultant yang bertugas memberikan rekomendasi pengembangan karier secara personal berdasarkan profil pengguna dan hasil assessment.
 
-Anda adalah AI Career Consultant.
+Gunakan seluruh informasi yang diberikan. Jangan mengabaikan informasi profil pengguna.
 
-Analisis data assessment berikut.
+Profil pengguna terdiri dari:
+- Pendidikan terakhir
+- Jurusan
+- Unit kerja
+- Jabatan
+- Lama pengalaman kerja
 
-${JSON.stringify(
-      assessmentData,
-      null,
-      2
-    )}
+Data pengguna:
 
-Jawaban HARUS berupa JSON VALID.
+${JSON.stringify(assessmentData, null, 2)}
 
-Jangan menggunakan markdown.
-Jawaban di buat detail.
-Bagian recommended_learning_place WAJIB berisi tepat 5 rekomendasi.
+====================================================
+ATURAN ANALISIS
+====================================================
 
-Empat rekomendasi pertama HARUS berupa platform pembelajaran online.
+Seluruh rekomendasi HARUS mempertimbangkan:
 
-Platform online yang diprioritaskan adalah:
+1. Pendidikan terakhir
+2. Jurusan
+3. Unit kerja
+4. Jabatan
+5. Lama pengalaman kerja
+6. Hasil assessment
+7. Dimensi kompetensi
 
-1. PediLearn (https://pedilearn.com)
-2. Coursera
-3. Udemy
-4. edX
+Roadmap karier harus realistis dan berkelanjutan.
 
-AI boleh mengganti Coursera/Udemy/edX dengan platform lain yang lebih sesuai apabila diperlukan, tetapi PediLearn harus selalu menjadi rekomendasi pertama.
+Apabila pengguna sudah memiliki pengalaman kerja yang cukup atau memiliki jabatan struktural, maka roadmap harus lebih banyak mengarah pada peningkatan kompetensi kepemimpinan, manajemen, pengambilan keputusan, komunikasi, dan pengembangan organisasi.
 
-Rekomendasi kelima HARUS berupa Program Studi Universitas Bandar Lampung (UBL).
+====================================================
+ATURAN PEMILIHAN PROGRAM STUDI UBL
+====================================================
 
-Pilih SATU program studi yang paling sesuai berdasarkan hasil assessment.
+Rekomendasi kelima pada recommended_learning_place WAJIB berupa Program Studi Universitas Bandar Lampung (UBL).
 
 Pilihan Program Studi Universitas Bandar Lampung adalah:
 
@@ -208,135 +225,247 @@ Program Pascasarjana
 - Magister Manajemen (S2)
 - Magister Teknik Sipil (S2)
 
-Setiap rekomendasi harus memiliki alasan yang spesifik mengapa tempat belajar tersebut dipilih berdasarkan hasil assessment pengguna.
+====================================================
+ATURAN PENDIDIKAN
+====================================================
+
+1. Jika pendidikan terakhir adalah SMA/SMK/Diploma maka rekomendasikan Program Sarjana (S1).
+
+2. Jika pendidikan terakhir adalah Sarjana (S1), maka JANGAN PERNAH merekomendasikan Program Sarjana (S1).
+
+3. Jika pendidikan terakhir adalah Sarjana (S1), maka WAJIB memilih salah satu Program Pascasarjana Universitas Bandar Lampung berikut:
+- Magister Manajemen
+- Magister Ilmu Administrasi
+- Magister Ilmu Hukum
+- Magister Teknik Sipil
+
+4. Pemilihan Program Pascasarjana harus mempertimbangkan:
+- jurusan sebelumnya
+- jabatan
+- unit kerja
+- pengalaman kerja
+- hasil assessment
+- dimensi kompetensi
+
+5. Jangan memilih program studi secara acak.
+
+====================================================
+PANDUAN PEMILIHAN PROGRAM STUDI
+====================================================
+
+Magister Manajemen cocok apabila:
+- Leadership tinggi
+- Decision Making tinggi
+- Manajerial tinggi
+- Supervisor
+- Manager
+- Kepala Bagian
+- Kepala Unit
+- Project Manager
+
+Magister Ilmu Administrasi cocok apabila:
+- ASN
+- Pemerintahan
+- Administrasi
+- Organisasi
+- Tata Kelola
+- Pelayanan Publik
+- Administrasi Perkantoran
+
+Magister Ilmu Hukum cocok apabila:
+- Bidang hukum
+- Legal
+- Kepatuhan
+- Regulasi
+- Pengawasan
+- Audit Hukum
+
+Magister Teknik Sipil cocok apabila:
+- Teknik Sipil
+- Engineering
+- Infrastruktur
+- Konstruksi
+- Perencanaan Teknik
+
+====================================================
+KONSISTENSI PENDIDIKAN
+====================================================
+
+Usahakan rekomendasi tetap selaras dengan latar belakang pendidikan pengguna.
+
+Contoh:
+
+S1 Informatika
+→ Magister Manajemen (jika assessment menunjukkan potensi manajerial)
+→ Magister Ilmu Administrasi (jika bekerja di pemerintahan)
+
+S1 Teknik Sipil
+→ Magister Teknik Sipil
+
+S1 Hukum
+→ Magister Ilmu Hukum
+
+S1 Manajemen
+→ Magister Manajemen
+
+S1 Administrasi Negara
+→ Magister Ilmu Administrasi
+
+====================================================
+REKOMENDASI LEARNING PLATFORM
+====================================================
+
+Bagian recommended_learning_place HARUS berisi tepat 5 rekomendasi.
+
+Empat rekomendasi pertama HARUS berupa platform pembelajaran online.
+
+Platform yang diprioritaskan:
+
+1. PediLearn (WAJIB menjadi rekomendasi pertama)
+2. Coursera
+3. Udemy
+4. edX
+
+AI boleh mengganti Coursera, Udemy, atau edX dengan platform lain yang lebih sesuai apabila diperlukan.
+
+Setiap platform harus memiliki alasan yang spesifik berdasarkan profil pengguna dan hasil assessment.
+
+====================================================
+FORMAT OUTPUT
+====================================================
+
+Jawaban HARUS berupa JSON VALID.
+
+Jangan menggunakan markdown.
 
 Jangan menggunakan \`\`\`.
+
+Seluruh field WAJIB terisi.
 
 Format JSON:
 
 {
-"top_5_development_priorities":[
-{
-"title":"",
-"description":"",
-"reason":""
-}
-],
+  "top_5_development_priorities":[
+    {
+      "title":"",
+      "description":"",
+      "reason":""
+    }
+  ],
 
-"development_recommendation":{
-"summary":"",
-"recommendations":[]
-},
+  "development_recommendation":{
+    "summary":"",
+    "recommendations":[]
+  },
 
-"individual_career_roadmap":[
-{
-"year":1,
-"title":"Fondasi Kompetensi",
-"focus":"",
-"target":"",
-"skills":[],
-"knowledge":[],
-"activities":[]
-},
-{
-"year":2,
-"title":"Penguatan Kompetensi",
-"focus":"",
-"target":"",
-"skills":[],
-"knowledge":[],
-"activities":[]
-},
-{
-"year":3,
-"title":"Pengembangan Profesional",
-"focus":"",
-"target":"",
-"skills":[],
-"knowledge":[],
-"activities":[]
-},
-{
-"year":4,
-"title":"Kesiapan Karier",
-"focus":"",
-"target":"",
-"skills":[],
-"knowledge":[],
-"activities":[]
-},
-{
-"year":5,
-"title":"Profesional Unggul",
-"focus":"",
-"target":"",
-"skills":[],
-"knowledge":[],
-"activities":[]
-}
-],
+  "individual_career_roadmap":[
+    {
+      "year":1,
+      "title":"Fondasi Kompetensi",
+      "focus":"",
+      "target":"",
+      "skills":[],
+      "knowledge":[],
+      "activities":[]
+    },
+    {
+      "year":2,
+      "title":"Penguatan Kompetensi",
+      "focus":"",
+      "target":"",
+      "skills":[],
+      "knowledge":[],
+      "activities":[]
+    },
+    {
+      "year":3,
+      "title":"Pengembangan Profesional",
+      "focus":"",
+      "target":"",
+      "skills":[],
+      "knowledge":[],
+      "activities":[]
+    },
+    {
+      "year":4,
+      "title":"Kesiapan Karier",
+      "focus":"",
+      "target":"",
+      "skills":[],
+      "knowledge":[],
+      "activities":[]
+    },
+    {
+      "year":5,
+      "title":"Profesional Unggul",
+      "focus":"",
+      "target":"",
+      "skills":[],
+      "knowledge":[],
+      "activities":[]
+    }
+  ],
 
-"individual_development_plan":[
-{
-"activity":"",
-"timeline":"",
-"indicator":""
-}
-],
+  "individual_development_plan":[
+    {
+      "activity":"",
+      "timeline":"",
+      "indicator":""
+    }
+  ],
 
-"recommended_learning_path":[
-{
-"title":"",
-"description":""
-}
-],
+  "recommended_learning_path":[
+    {
+      "title":"",
+      "description":""
+    }
+  ],
 
-"recommended_learning_place":[
-{
-"name":"PediLearn",
-"type":"Online Learning Platform",
-"category":"Online",
-"url":"https://pedilearn.com",
-"reason":""
-},
-{
-"name":"",
-"type":"Online Learning Platform",
-"category":"Online",
-"url":"",
-"reason":""
-},
-{
-"name":"",
-"type":"Online Learning Platform",
-"category":"Online",
-"url":"",
-"reason":""
-},
-{
-"name":"",
-"type":"Online Learning Platform",
-"category":"Online",
-"url":"",
-"reason":""
-},
-{
-"name":"",
-"type":"Universitas Bandar Lampung",
-"category":"University",
-"faculty":"",
-"study_program":"",
-"degree":"",
-"reason":""
-}
-]
+  "recommended_learning_place":[
+    {
+      "name":"PediLearn",
+      "type":"Online Learning Platform",
+      "category":"Online",
+      "url":"https://pedilearn.com",
+      "reason":""
+    },
+    {
+      "name":"",
+      "type":"Online Learning Platform",
+      "category":"Online",
+      "url":"",
+      "reason":""
+    },
+    {
+      "name":"",
+      "type":"Online Learning Platform",
+      "category":"Online",
+      "url":"",
+      "reason":""
+    },
+    {
+      "name":"",
+      "type":"Online Learning Platform",
+      "category":"Online",
+      "url":"",
+      "reason":""
+    },
+    {
+      "name":"Universitas Bandar Lampung",
+      "type":"University",
+      "category":"University",
+      "faculty":"",
+      "study_program":"",
+      "degree":"",
+      "reason":""
+    }
+  ],
 
-"personal_commitment":{
-"title":"",
-"statement":""
+  "personal_commitment":{
+    "title":"",
+    "statement":""
+  }
 }
-}
-
 `;
     /*
     |--------------------------------------------------------------------------
@@ -379,7 +508,7 @@ Format JSON:
 
     try {
       aiResult = JSON.parse(aiContent);
-    } catch (e) {
+    } catch {
       console.error("===== RESPONSE OPENAI =====");
       console.error(aiContent);
 

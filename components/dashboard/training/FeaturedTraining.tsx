@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import {
   Star,
   Clock3,
@@ -63,10 +65,12 @@ export default function FeaturedTraining({
 
             <div className="relative h-56 overflow-hidden">
 
-              <img
+              <Image
                 src={training.image}
                 alt={training.title}
-                className="h-full w-full object-cover"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
               />
 
               <span className="absolute left-5 top-5 rounded-full bg-cyan-600 px-4 py-2 text-sm font-semibold text-white">

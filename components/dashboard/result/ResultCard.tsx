@@ -23,14 +23,8 @@ export default function ResultCard() {
     useState<any[]>([]);
 
   useEffect(() => {
-
-    loadResult();
-
-  }, []);
-
-  async function loadResult() {
-
-    try {
+    async function loadResult() {
+      try {
 
       const res =
         await api.get(
@@ -53,13 +47,13 @@ export default function ResultCard() {
 
       console.error(error);
 
-    } finally {
-
-      setLoading(false);
-
+      } finally {
+        setLoading(false);
+      }
     }
 
-  }
+    void loadResult();
+  }, []);
 
   if (loading) {
 

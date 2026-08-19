@@ -8,7 +8,6 @@ import {
   Briefcase,
   BarChart3,
   Target,
-  Settings,
   LogOut,
   ChevronLeft,
   ChevronRight,

@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import {
   Star,
   Clock3,
@@ -33,12 +35,14 @@ export default function TrainingCard({
 
       {/* Image */}
 
-      <div className="relative">
+      <div className="relative h-52">
 
-        <img
+        <Image
           src={training.image}
           alt={training.title}
-          className="h-52 w-full object-cover"
+          fill
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+          className="object-cover"
         />
 
         <div className="absolute left-4 top-4 rounded-full bg-cyan-600 px-3 py-1 text-xs font-semibold text-white">

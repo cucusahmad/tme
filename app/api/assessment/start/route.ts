@@ -52,6 +52,13 @@ export async function POST(
 
     }
 
+    if (!biodata.profession_id) {
+      return failed(
+        "Pilih profesi pada biodata terlebih dahulu.",
+        400
+      );
+    }
+
     const assessment =
       await startAssessment(
         biodata.biodata_id

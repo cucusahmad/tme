@@ -15,11 +15,8 @@ export default function StatusCard() {
     useState<any[]>([]);
 
   useEffect(() => {
-    loadData();
-  }, []);
-
-  async function loadData() {
-    try {
+    async function loadData() {
+      try {
       const [profileRes, memberRes, documentRes] =
         await Promise.all([
           api.get("/participant/profile"),
@@ -33,10 +30,13 @@ export default function StatusCard() {
 
       setDocuments(documentRes.data.data);
 
-    } catch (error) {
-      console.error(error);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }
+
+    void loadData();
+  }, []);
 
   const profileCompleted =
     profile?.team_name &&
