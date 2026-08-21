@@ -35,7 +35,8 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const shareUrl = new URL(`/nilai/${shareToken}`, request.nextUrl.origin).toString();
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? request.nextUrl.origin;
+    const shareUrl = new URL(`/nilai/${shareToken}`, appUrl).toString();
     return success({ shareUrl, completed }, "Tautan penilaian tersedia.");
   } catch (error) {
     const message = error instanceof Error ? error.message : "Terjadi kesalahan.";
