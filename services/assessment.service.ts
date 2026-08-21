@@ -7,6 +7,7 @@ export async function getCurrentAssessment(
     where: {
       biodata_id: biodataId,
       status: "DRAFT",
+      assessment_type: "SELF",
     },
     orderBy: {
       assessment_id: "desc",

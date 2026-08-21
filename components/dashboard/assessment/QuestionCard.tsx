@@ -1,6 +1,6 @@
 interface Props {
   question: {
-    question_id: bigint;
+    question_id: bigint | string;
     question: string;
     question_order?: number;
     dimension?: {

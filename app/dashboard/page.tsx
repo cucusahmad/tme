@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 import api from "@/lib/api";
+import AssessmentShareCard from "@/components/dashboard/AssessmentShareCard";
 
 type Biodata = Record<string, unknown> & {
   nama_lengkap?: string | null;
@@ -250,6 +251,8 @@ export default function DashboardPage() {
           <MetricCard icon={BriefcaseBusiness} label="Roadmap karier" value={hasRecommendation ? "Tersedia" : "Belum"} description={hasRecommendation ? "Rekomendasi siap dipelajari" : "Selesaikan assessment terlebih dahulu"} tone="amber" />
         </div>
       </section>
+
+      <AssessmentShareCard />
 
       <div className="grid gap-6 xl:grid-cols-[1.35fr_0.65fr]">
         <section className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-7" aria-labelledby="profile-progress-title">
