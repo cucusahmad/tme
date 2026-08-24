@@ -59,7 +59,7 @@ export default function DimensionChart({ dimensions = [] }: Props) {
     labels: labels,
     datasets: [
       {
-        label: "Talent Match",
+        label: "Pemetaan Talenta",
         data: dataValues,
         backgroundColor: "rgba(6,182,212,0.20)",
         borderColor: "#06b6d4",

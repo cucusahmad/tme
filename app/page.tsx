@@ -7,20 +7,13 @@ import Footer from "@/components/landing/Footer";
 
 export default function Home() {
   return (
-    <>
+    <main className="overflow-hidden bg-white">
       <Navbar />
-
       <Hero />
-
-     
-        <About />
-   
-       <CaraKerja />
-       <Profesi />
-
-
+      <About />
+      <CaraKerja />
+      <Profesi />
       <Footer />
-
-    </>
+    </main>
   );
 }

@@ -7,7 +7,7 @@ import { serialize } from "@/lib/serializer";
 
 import {
   getCurrentAssessment,
-  saveAnswer,
+  saveOptionAnswer,
 } from "@/services/assessment.service";
 
 function getUserId(request: NextRequest): bigint {
@@ -66,11 +66,23 @@ export async function POST(
 
     }
 
+    if (!biodata.profession_id) {
+      return failed("Pilih profesi terlebih dahulu.", 400);
+    }
+
+    const questionId = String(body.question_id ?? "");
+    const optionId = Number(body.option_id);
+
+    if (!/^\d+$/.test(questionId) || !Number.isInteger(optionId)) {
+      return failed("Jawaban tidak valid.", 400);
+    }
+
     const answer =
-      await saveAnswer(
+      await saveOptionAnswer(
         assessment.assessment_id,
-        BigInt(body.question_id),
-        Number(body.answer_value)
+        biodata.profession_id,
+        BigInt(questionId),
+        optionId
       );
 
     return success(

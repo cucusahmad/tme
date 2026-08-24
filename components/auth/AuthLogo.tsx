@@ -1,19 +1,16 @@
-import Image from "next/image";
+import { ShieldCheck } from "lucide-react";
 
 export default function AuthLogo() {
   return (
-    <div className="flex justify-center">
-      <div
-        className="flex h-20 w-44 items-center justify-center rounded-2xl bg-white px-4 shadow-sm ring-1 ring-slate-200"
-      >
-        <Image
-          src="/images/logo-ubl.png"
-          width={256}
-          height={153}
-          alt="Universitas Bandar Lampung"
-          className="h-auto w-full object-contain"
-          preload
-        />
+    <div className="flex justify-center text-center">
+      <div className="flex items-center gap-3 rounded-2xl bg-white px-5 py-3 shadow-sm ring-1 ring-slate-200">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-700 text-white">
+          <ShieldCheck size={25} />
+        </div>
+        <div className="text-left">
+          <p className="text-lg font-black tracking-tight text-slate-950">SIPETA POLRI</p>
+          <p className="max-w-52 text-[10px] font-medium leading-4 text-slate-500">Sistem Informasi Pemetaan Talenta Polri</p>
+        </div>
       </div>
     </div>
   );

@@ -53,7 +53,7 @@ export async function getNextQuestion(
     (item) => item.question_id
   );
 
-  return prisma.question.findFirst({
+  const questions = await prisma.question.findMany({
     where: {
       dimension: {
         profession_id: professionId,
@@ -68,19 +68,31 @@ export async function getNextQuestion(
 
     include: {
       dimension: true,
+      question_option: true,
     },
-
-    orderBy: [
-      {
-        dimension: {
-          order_no: "asc",
-        },
-      },
-      {
-        question_order: "asc",
-      },
-    ],
   });
+
+  if (questions.length === 0) {
+    return null;
+  }
+
+  const question = questions[Math.floor(Math.random() * questions.length)];
+
+  return {
+    ...question,
+    question_option: shuffle(question.question_option),
+  };
+}
+
+function shuffle<T>(items: T[]): T[] {
+  const result = [...items];
+
+  for (let index = result.length - 1; index > 0; index--) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [result[index], result[randomIndex]] = [result[randomIndex], result[index]];
+  }
+
+  return result;
 }
 
 export async function getProgress(
@@ -112,15 +124,52 @@ export async function getProgress(
         : Math.round(
             (answered / totalQuestion) * 100
           ),
-    current: answered + 1,
+    current: Math.min(answered + 1, totalQuestion),
   };
+}
+
+export async function saveOptionAnswer(
+  assessmentId: bigint,
+  professionId: bigint,
+  questionId: bigint,
+  optionId: number
+) {
+  const option = await prisma.question_option.findFirst({
+    where: {
+      option_id: optionId,
+      question_id: questionId,
+      question: {
+        dimension: {
+          profession_id: professionId,
+        },
+      },
+    },
+  });
+
+  if (!option) {
+    throw new Error("INVALID_QUESTION_OPTION");
+  }
+
+  const answerValue = Number(option.weight);
+
+  if (!Number.isInteger(answerValue) || answerValue < 0 || answerValue > 5) {
+    throw new Error("INVALID_QUESTION_OPTION_WEIGHT");
+  }
+
+  return saveAnswer(
+    assessmentId,
+    questionId,
+    option.option_id,
+    answerValue
+  );
 }
 
 
 export async function saveAnswer(
   assessmentId: bigint,
   questionId: bigint,
-  answerValue: number
+  questionOptionId: number,
+  weight: number
 ) {
   return prisma.answer.upsert({
     where: {
@@ -131,13 +180,17 @@ export async function saveAnswer(
     },
 
     update: {
-      answer_value: answerValue,
+      question_option_id: questionOptionId,
+      answer_value: weight,
+      weight,
     },
 
     create: {
       assessment_id: assessmentId,
       question_id: questionId,
-      answer_value: answerValue,
+      question_option_id: questionOptionId,
+      answer_value: weight,
+      weight,
     },
   });
 }

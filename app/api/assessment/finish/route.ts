@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { verifyToken } from "@/lib/jwt";
 import { success, failed } from "@/lib/response";
 import { serialize } from "@/lib/serializer";
-import { getCurrentAssessment } from "@/services/assessment.service";
+import { getCurrentAssessment, getProgress } from "@/services/assessment.service";
 import {
   calculateDimensionResult,
   calculateProfessionResult,
@@ -41,13 +41,15 @@ export async function POST(request: NextRequest) {
       return failed("Assessment aktif tidak ditemukan.", 400);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Hitung Nilai Dimensi & Talent Match
-    |--------------------------------------------------------------------------
-    | Pengecekan (totalAnswer < totalQuestion) dihilangkan karena validasi 
-    | progress sudah ditangani di sisi Client (Frontend) via Tombol Konfirmasi.
-    */
+    const progress = await getProgress(
+      assessment.assessment_id,
+      biodata.profession_id
+    );
+
+    if (progress.total === 0 || progress.answered !== progress.total) {
+      return failed("Semua pertanyaan harus dijawab sebelum assessment diselesaikan.", 400);
+    }
+
     await calculateDimensionResult(assessment.assessment_id);
     await calculateProfessionResult(assessment.assessment_id);
 

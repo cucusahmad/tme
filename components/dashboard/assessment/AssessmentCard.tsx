@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 import ProgressBar from "@/components/dashboard/assessment/ProgressBar";
 import QuestionCard from "./QuestionCard";
-import ScaleSelector from "./ScaleSelector";
+import OptionSelector from "./OptionSelector";
 
 export default function AssessmentCard() {
   const router = useRouter();
@@ -67,12 +67,14 @@ export default function AssessmentCard() {
     void startAssessment();
   }, []);
 
-  async function handleAnswer(value: number) {
+  async function handleAnswer(optionId: number) {
+    if (submitting) return;
+    setSubmitting(true);
     try {
       // 1. Simpan jawaban ke database
       await api.post("/assessment/answer", {
         question_id: question.question_id,
-        answer_value: value,
+        option_id: optionId,
       });
 
       // 2. Ambil soal berikutnya & perbarui progres terbaru
@@ -84,6 +86,8 @@ export default function AssessmentCard() {
     } catch (error) {
       console.error(error);
       toast.error("Gagal menyimpan jawaban.");
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -185,7 +189,11 @@ export default function AssessmentCard() {
 
       <QuestionCard question={question} />
 
-      <ScaleSelector onSelect={handleAnswer} />
+      <OptionSelector
+        options={question.question_option ?? []}
+        disabled={submitting}
+        onSelect={handleAnswer}
+      />
     </div>
   );
 }

@@ -61,7 +61,7 @@ export default async function AdminDashboardPage() {
         <div className="relative flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <div className="max-w-2xl">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-semibold text-cyan-200">
-              <Sparkles size={14} /> Pusat kontrol Talent Match
+              <Sparkles size={14} /> Pusat kontrol SIPETA POLRI
             </div>
             <h1 className="text-3xl font-black tracking-tight sm:text-4xl">Selamat datang, Administrator</h1>
             <p className="mt-3 max-w-xl text-sm leading-6 text-slate-300 sm:text-base">Pantau perkembangan peserta, hasil assessment, dan rekomendasi talenta dalam satu tampilan.</p>

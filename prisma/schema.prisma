@@ -9,17 +9,21 @@ datasource db {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model answer {
-  answer_id     BigInt     @id @default(autoincrement())
-  assessment_id BigInt
-  question_id   BigInt
-  answer_value  Int        @db.SmallInt
-  created_at    DateTime?  @default(now()) @db.Timestamp(6)
-  assessment    assessment @relation(fields: [assessment_id], references: [assessment_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_answer_assessment")
-  question      question   @relation(fields: [question_id], references: [question_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_answer_question")
+  answer_id          BigInt           @id @default(autoincrement())
+  assessment_id      BigInt
+  question_id        BigInt
+  question_option_id Int?
+  answer_value       Int              @db.SmallInt
+  weight             Decimal?         @db.Decimal(5, 2)
+  created_at         DateTime?        @default(now()) @db.Timestamp(6)
+  assessment         assessment       @relation(fields: [assessment_id], references: [assessment_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_answer_assessment")
+  question           question         @relation(fields: [question_id], references: [question_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_answer_question")
+  question_option    question_option? @relation(fields: [question_option_id], references: [option_id], onDelete: SetNull, onUpdate: NoAction, map: "fk_answer_question_option")
 
   @@unique([assessment_id, question_id], map: "uq_assessment_question")
   @@index([assessment_id], map: "idx_answer_assessment")
   @@index([question_id], map: "idx_answer_question")
+  @@index([question_option_id], map: "idx_answer_question_option")
 }
 
 model assessment {
@@ -133,7 +137,7 @@ model profession {
 model profession_unit {
   profession_unit_id        BigInt                      @id @default(autoincrement())
   profession_id             BigInt
-  unit_name                 String                      @db.VarChar(100)
+  unit_name                 String                      @db.VarChar(1000)
   assessment_result         assessment_result[]
   profession                profession                  @relation(fields: [profession_id], references: [profession_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_profession_unit_profession")
   profession_unit_dimension profession_unit_dimension[]
@@ -156,12 +160,15 @@ model profession_unit_dimension {
 }
 
 model question {
-  question_id    BigInt    @id @default(autoincrement())
-  dimension_id   BigInt
-  question       String
-  question_order Int?
-  answer         answer[]
-  dimension      dimension @relation(fields: [dimension_id], references: [dimension_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_question_dimension")
+  question_id     BigInt            @id @default(autoincrement())
+  dimension_id    BigInt
+  question        String
+  question_order  Int?
+  created_at      DateTime?         @default(now()) @db.Timestamp(6)
+  updated_at      DateTime?         @default(now()) @db.Timestamp(6)
+  answer          answer[]
+  dimension       dimension         @relation(fields: [dimension_id], references: [dimension_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_question_dimension")
+  question_option question_option[]
 
   @@index([dimension_id], map: "idx_question_dimension")
 }
@@ -189,4 +196,18 @@ model assessment_ai_recommendation {
   personal_commitment          Json
   created_at                   DateTime? @default(now()) @db.Timestamp(6)
   biodata                      biodata   @relation(fields: [biodata_id], references: [biodata_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_ai_rec_biodata")
+}
+
+model question_option {
+  option_id    Int       @id @default(autoincrement())
+  question_id  BigInt
+  option_order Int
+  option_text  String
+  weight       Decimal   @default(0) @db.Decimal(5, 2)
+  created_at   DateTime? @default(now()) @db.Timestamp(6)
+  updated_at   DateTime? @default(now()) @db.Timestamp(6)
+  question     question  @relation(fields: [question_id], references: [question_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_question_option_question")
+  answer       answer[]
+
+  @@unique([question_id, option_order], map: "uq_question_option_order")
 }

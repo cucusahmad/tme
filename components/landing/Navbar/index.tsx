@@ -1,142 +1,19 @@
-
 "use client";
-
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Menu, X, Target } from "lucide-react";
+import { Menu, Shield, X } from "lucide-react";
 
-const menus = [
-  { title: "Beranda", href: "#home" },
-  { title: "Tentang", href: "#about" },
-  { title: "Cara Kerja", href: "#how-it-works" },
-  { title: "Profesi", href: "#profession" },
-  { title: "Roadmap", href: "#roadmap" },
-  { title: "FAQ", href: "#faq" },
-];
-
+const menus = [{ title: "Tentang", href: "#tentang" }, { title: "Manfaat", href: "#manfaat" }, { title: "Cara Kerja", href: "#cara-kerja" }, { title: "Pemetaan", href: "#pemetaan" }];
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [scroll, setScroll] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScroll(window.scrollY > 30);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <>
-      <motion.header
-        initial={{ y: -80 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="fixed inset-x-0 top-0 z-50 flex justify-center"
-      >
-        <div
-          className={`mt-6 w-[95%] max-w-7xl transition-all duration-500 ${
-            scroll
-              ? "rounded-2xl border border-white/50 bg-white/75 backdrop-blur-xl shadow-xl"
-              : "rounded-2xl bg-transparent"
-          }`}
-        >
-          <div className="flex h-20 items-center justify-between px-8">
-            <Link href="/" className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 via-blue-500 to-indigo-600 text-white shadow-lg">
-                <Target size={22} />
-              </div>
-
-              <div>
-                <h1
-                  className={`text-xl font-black transition-colors ${
-                    scroll ? "text-slate-900" : "text-white"
-                  }`}
-                >
-                  Talent Match
-                </h1>
-
-                <p
-                  className={`text-xs transition-colors ${
-                    scroll ? "text-slate-500" : "text-cyan-100"
-                  }`}
-                >
-                  Precision Career Matching Platform
-                </p>
-              </div>
-            </Link>
-
-            <nav className="hidden items-center gap-10 lg:flex">
-              {menus.map((item) => (
-                <Link
-                  key={item.title}
-                  href={item.href}
-                  className={`group relative font-medium transition ${
-                    scroll
-                      ? "text-slate-700 hover:text-cyan-600"
-                      : "text-white hover:text-cyan-300"
-                  }`}
-                >
-                  {item.title}
-                  <span className="absolute -bottom-2 left-0 h-[2px] w-0 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-300 group-hover:w-full" />
-                </Link>
-              ))}
-            </nav>
-
-            <div className="hidden lg:block">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
-                <Link
-                  href="/auth/register"
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 px-7 py-3 font-semibold text-white shadow-lg"
-                >
-                  Mulai Assessment
-                  <ArrowRight size={18} />
-                </Link>
-              </motion.div>
-            </div>
-
-            <button
-              onClick={() => setOpen(!open)}
-              className={`lg:hidden transition ${
-                scroll ? "text-slate-900" : "text-white"
-              }`}
-            >
-              {open ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
-        </div>
-      </motion.header>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -25 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -25 }}
-            className="fixed left-1/2 top-24 z-40 w-[92%] -translate-x-1/2 rounded-3xl border border-cyan-100 bg-white/90 p-6 shadow-xl backdrop-blur-xl lg:hidden"
-          >
-            <div className="flex flex-col gap-5">
-              {menus.map((item) => (
-                <Link
-                  key={item.title}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="font-medium text-slate-700 transition hover:text-cyan-600"
-                >
-                  {item.title}
-                </Link>
-              ))}
-
-              <Link
-                href="/auth/register"
-                onClick={() => setOpen(false)}
-                className="mt-2 rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 py-3 text-center font-semibold text-white"
-              >
-                Mulai Assessment
-              </Link>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
+  const [open, setOpen] = useState(false); const [scrolled, setScrolled] = useState(false);
+  useEffect(() => { const handler = () => setScrolled(window.scrollY > 24); handler(); window.addEventListener("scroll", handler); return () => window.removeEventListener("scroll", handler); }, []);
+  return <header className={`fixed inset-x-0 top-0 z-50 transition-all ${scrolled ? "border-b border-slate-200/80 bg-white/95 shadow-sm backdrop-blur-xl" : "bg-transparent"}`}>
+    <div className="mx-auto flex h-24 max-w-7xl items-center justify-between px-6 lg:px-8">
+      <Link href="#beranda" className="flex items-center gap-3" onClick={() => setOpen(false)}><span className={`flex h-12 w-12 items-center justify-center rounded-xl border ${scrolled ? "border-[#0b2744] bg-[#0b2744] text-amber-300" : "border-white/20 bg-white/10 text-amber-300"}`}><Shield size={24} /></span><span><strong className={`block text-lg tracking-[.08em] ${scrolled ? "text-[#08182b]" : "text-white"}`}>SIPETA POLRI</strong><small className={scrolled ? "text-slate-500" : "text-slate-300"}>Sistem Informasi Pemetaan Talenta</small></span></Link>
+      <nav className="hidden items-center gap-8 lg:flex">{menus.map(item => <Link key={item.title} href={item.href} className={`text-sm font-semibold transition ${scrolled ? "text-slate-600 hover:text-[#0b2744]" : "text-slate-200 hover:text-amber-300"}`}>{item.title}</Link>)}</nav>
+      <Link href="/auth/login" className="hidden rounded-xl bg-amber-300 px-5 py-3 text-sm font-bold text-[#071426] transition hover:bg-amber-200 lg:block">Masuk Sistem</Link>
+      <button type="button" aria-label="Buka navigasi" onClick={() => setOpen(!open)} className={`lg:hidden ${scrolled ? "text-slate-900" : "text-white"}`}>{open ? <X /> : <Menu />}</button>
+    </div>
+    {open && <div className="border-t border-slate-200 bg-white px-6 py-5 shadow-xl lg:hidden"><nav className="flex flex-col gap-4">{menus.map(item => <Link key={item.title} href={item.href} onClick={() => setOpen(false)} className="font-semibold text-slate-700">{item.title}</Link>)}<Link href="/auth/login" className="mt-2 rounded-xl bg-[#0b2744] px-5 py-3 text-center font-bold text-white">Masuk Sistem</Link></nav></div>}
+  </header>;
 }

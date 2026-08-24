@@ -5,10 +5,10 @@ import { CheckCircle2, LoaderCircle, ShieldCheck } from "lucide-react";
 
 import ProgressBar from "@/components/dashboard/assessment/ProgressBar";
 import QuestionCard from "@/components/dashboard/assessment/QuestionCard";
-import ScaleSelector from "@/components/dashboard/assessment/ScaleSelector";
+import OptionSelector from "@/components/dashboard/assessment/OptionSelector";
 
 type Owner = { ownerName: string; profession: string | null };
-type Question = { question_id: string; question: string; question_order?: number; dimension?: { dimension_name: string } };
+type Question = { question_id: string; question: string; question_order?: number; dimension?: { dimension_name: string }; question_option: Array<{ option_id: number; option_text: string }> };
 type Progress = { current: number; total: number; answered: number; percentage: number };
 
 export default function PublicAssessment({ token }: { token: string }) {
@@ -74,12 +74,12 @@ export default function PublicAssessment({ token }: { token: string }) {
     }
   }
 
-  async function answer(value: number) {
+  async function answer(optionId: number) {
     if (!question || submitting) return;
     setSubmitting(true);
     setError("");
     try {
-      const data = await sendAction("answer", { question_id: question.question_id, answer_value: value });
+      const data = await sendAction("answer", { question_id: question.question_id, option_id: optionId });
       setQuestion(data.question);
       setProgress(data.progress);
     } catch (requestError) {
@@ -125,5 +125,5 @@ export default function PublicAssessment({ token }: { token: string }) {
     <div className="mx-auto max-w-2xl rounded-3xl bg-white p-9 text-center shadow-lg"><CheckCircle2 className="mx-auto text-blue-600" size={48} /><h1 className="mt-4 text-2xl font-bold text-slate-900">Semua pertanyaan telah dijawab</h1><p className="mt-2 text-slate-500">Periksa kembali kesiapan Anda, lalu kirim penilaian.</p>{error && <p className="mt-3 text-sm text-red-600">{error}</p>}<button onClick={finish} disabled={submitting} className="mt-6 rounded-xl bg-blue-600 px-7 py-3 font-semibold text-white hover:bg-blue-700 disabled:bg-blue-400">{submitting ? "Mengirim…" : "Kirim penilaian"}</button></div>
   );
 
-  return <div className={`mx-auto max-w-4xl space-y-6 rounded-3xl bg-white p-6 shadow-xl sm:p-8 ${submitting ? "pointer-events-none opacity-70" : ""}`}><ProgressBar current={progress?.current ?? 0} total={progress?.total ?? 0} percentage={progress?.percentage ?? 0} /><QuestionCard question={question} /><ScaleSelector onSelect={answer} />{error && <p className="text-center text-sm font-medium text-red-600">{error}</p>}</div>;
+  return <div className={`mx-auto max-w-4xl space-y-6 rounded-3xl bg-white p-6 shadow-xl sm:p-8 ${submitting ? "pointer-events-none opacity-70" : ""}`}><ProgressBar current={progress?.current ?? 0} total={progress?.total ?? 0} percentage={progress?.percentage ?? 0} /><QuestionCard question={question} /><OptionSelector options={question.question_option ?? []} disabled={submitting} onSelect={answer} />{error && <p className="text-center text-sm font-medium text-red-600">{error}</p>}</div>;
 }

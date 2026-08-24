@@ -34,7 +34,7 @@ export default function AdminShell({
           <Brain size={24} />
         </div>
         <div>
-          <p className="font-bold">Talent Match</p>
+          <p className="font-bold">SIPETA POLRI</p>
           <p className="text-xs text-slate-400">Admin Panel</p>
         </div>
       </div>

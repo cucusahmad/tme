@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Talent Match",
-  description: "Platform assessment dan rekomendasi pengembangan karier.",
+  title: "SIPETA POLRI | Sistem Informasi Pemetaan Talenta Polri",
+  description:
+    "Sistem informasi pemetaan kompetensi dan potensi personel Polri untuk mendukung pengembangan karier serta penempatan yang tepat.",
+  keywords: ["SIPETA POLRI", "pemetaan talenta", "kompetensi Polri", "SDM Polri"],
 };
 
 export default function RootLayout({

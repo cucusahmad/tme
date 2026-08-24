@@ -1,151 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Compass, Sparkles } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { ArrowRight, BadgeCheck, ChevronRight, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 
 export default function HeroContent() {
-  const router = useRouter();
-
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -60 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.8 }}
-      className="max-w-2xl"
-    >
-      {/* Badge */}
-      <div className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white/70 px-5 py-2 backdrop-blur-xl shadow-md">
-        <Sparkles size={16} className="text-cyan-600" />
-
-        <span className="text-xs font-semibold uppercase tracking-[0.25em] text-cyan-700">
-          Future Career Intelligence
-        </span>
+    <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="max-w-3xl">
+      <div className="mb-7 inline-flex items-center gap-3 rounded-full border border-amber-300/25 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-[.2em] text-amber-200 backdrop-blur-md">
+        <ShieldCheck size={16} /> Sistem Informasi SDM Polri
       </div>
-
-      {/* Title */}
-     <h1 className="hero-title mt-8 leading-[0.95]">
-  <span className="block text-4xl font-black text-white md:text-5xl xl:text-6xl">
-    JELAJAHI
-  </span>
-
-  <span className="mt-2 block bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-4xl font-black text-transparent md:text-5xl xl:text-6xl">
-    KARIR 
-  </span>
-
-  <span className="mt-2 block text-4xl font-black text-white md:text-5xl xl:text-6xl">
-    MASA DEPAN
-  </span>
-</h1>
-
-      {/* Motto */}
-     <div className="mt-4 flex flex-wrap gap-8 text-lg font-semibold">
-  <span className="text-cyan-300">DISCOVER.</span>
-  <span className="text-cyan-300">MATCH.</span>
-  <span className="text-purple-300">GROW.</span>
-</div>
-
-      {/* Description */}
-     <p className="mt-4 max-w-xl text-lg leading-9 text-slate-300">
-  Talent Match membantu Anda menemukan profesi yang paling sesuai berdasarkan
-  potensi, kompetensi, minat, dan karakter. Dapatkan persentase kecocokan
-  karier beserta roadmap pengembangan diri untuk mewujudkan profesi impian
-  Anda.
-</p>
-
-      {/* Buttons */}
-      <div className="mt-12 flex flex-wrap gap-5">
-        <button
-          type="button"
-          onClick={() => router.push("/auth/register")}
-          className="
-            group
-            flex
-            items-center
-            gap-2
-            rounded-full
-            bg-gradient-to-r
-            from-cyan-500
-            via-blue-500
-            to-indigo-600
-            px-8
-            py-4
-            font-semibold
-            text-white
-            shadow-lg
-            transition-all
-            duration-300
-            hover:scale-105
-            hover:shadow-cyan-300/60
-          "
-        >
-          Mulai Assessment
-
-          <ArrowRight
-            size={18}
-            className="transition group-hover:translate-x-1"
-          />
-        </button>
-
-        <button
-          type="button"
-          onClick={() =>
-            document
-              .getElementById("how-it-works")
-              ?.scrollIntoView({ behavior: "smooth" })
-          }
-          className="
-            group
-            flex
-            items-center
-            gap-2
-            rounded-full
-            border
-            border-cyan-200
-            bg-white/70
-            px-8
-            py-4
-            font-semibold
-            text-slate-700
-            backdrop-blur-xl
-            transition-all
-            duration-300
-            hover:border-cyan-500
-            hover:bg-white
-            hover:text-cyan-600
-          "
-        >
-          Cara Kerja
-
-          <Compass
-            size={18}
-            className="transition group-hover:rotate-45"
-          />
-        </button>
+      <h1 className="text-5xl font-black leading-[1.02] tracking-[-.045em] text-white sm:text-6xl xl:text-7xl">
+        Pemetaan talenta untuk<span className="mt-2 block text-amber-300">Polri yang presisi.</span>
+      </h1>
+      <p className="mt-7 text-xl font-semibold text-cyan-100 sm:text-2xl">Memetakan Kompetensi, Mengarahkan Penempatan.</p>
+      <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+        SIPETA POLRI mengintegrasikan profil, kompetensi, potensi, dan hasil asesmen personel menjadi informasi talenta yang objektif untuk mendukung pembinaan karier dan penempatan sesuai kebutuhan organisasi.
+      </p>
+      <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+        <Link href="/auth/login" className="group inline-flex items-center justify-center gap-3 rounded-xl bg-amber-300 px-7 py-4 font-bold text-[#071426] shadow-[0_14px_40px_rgba(251,191,36,.18)] transition hover:bg-amber-200">Masuk ke SIPETA <ArrowRight size={18} className="transition group-hover:translate-x-1" /></Link>
+        <Link href="#cara-kerja" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-7 py-4 font-semibold text-white backdrop-blur-md transition hover:bg-white/10">Pelajari sistem <ChevronRight size={18} /></Link>
       </div>
-
-      {/* Statistik */}
-      <div className="mt-14 flex flex-wrap gap-10">
-        <div>
-          <h3 className="text-3xl font-black text-cyan-600">100+</h3>
-          <p className="mt-1 text-sm text-slate-500">
-            Pilihan Profesi
-          </p>
-        </div>
-
-        <div>
-          <h3 className="text-3xl font-black text-blue-600">10+</h3>
-          <p className="mt-1 text-sm text-slate-500">
-            Dimensi Penilaian
-          </p>
-        </div>
-
-        <div>
-          <h3 className="text-3xl font-black text-indigo-600">AI</h3>
-          <p className="mt-1 text-sm text-slate-500">
-            Career Recommendation
-          </p>
-        </div>
+      <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/10 pt-7 text-sm text-slate-300">
+        {["Terukur", "Terintegrasi", "Berorientasi penempatan"].map((item) => <span key={item} className="flex items-center gap-2"><BadgeCheck size={17} className="text-amber-300" />{item}</span>)}
       </div>
     </motion.div>
   );

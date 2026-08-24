@@ -36,7 +36,7 @@ export default function AssessmentShareCard() {
   async function shareLink() {
     if (navigator.share) {
       await navigator.share({
-        title: "Penilaian Talent Match",
+        title: "Penilaian SIPETA POLRI",
         text: "Bantu nilai kompetensi saya melalui assessment singkat ini.",
         url: shareUrl,
       });

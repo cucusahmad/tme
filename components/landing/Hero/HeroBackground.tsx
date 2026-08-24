@@ -1,67 +1,14 @@
 export default function HeroBackground() {
   return (
-    <div
-      className="
-        fixed
-        inset-0
-        -z-50
-        bg-cover
-        bg-center
-        bg-no-repeat
-        bg-fixed
-      "
-      style={{
-        backgroundImage: `
-          linear-gradient(
-            90deg,
-            rgba(255,255,255,.92) 0%,
-            rgba(255,255,255,.78) 28%,
-            rgba(255,255,255,.50) 45%,
-            rgba(255,255,255,.15) 65%,
-            rgba(255,255,255,.40) 100%
-          ),
-          linear-gradient(
-            to top,
-            rgba(248,250,252,.90) 0%,
-            rgba(248,250,252,.25) 35%,
-            transparent 60%
-          ),
-          url('/images/hero/background.webp')
-        `,
-      }}
-    >
-      {/* Glow Kiri */}
-      <div className="absolute left-[-220px] top-1/2 h-[700px] w-[700px] -translate-y-1/2 rounded-full bg-cyan-300/35 blur-[180px]" />
-
-      {/* Glow Kanan */}
-      <div className="absolute right-[-220px] top-24 h-[600px] w-[600px] rounded-full bg-blue-400/30 blur-[180px]" />
-
-      {/* Glow Tengah */}
-      <div className="absolute left-1/2 top-1/3 h-[450px] w-[450px] -translate-x-1/2 rounded-full bg-sky-300/20 blur-[140px]" />
-
-      {/* Grid */}
+    <div className="pointer-events-none absolute inset-0 overflow-hidden bg-[#071426]">
       <div
-        className="absolute inset-0 opacity-[0.08]"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(14,165,233,.10) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(14,165,233,.10) 1px, transparent 1px)
-          `,
-          backgroundSize: "70px 70px",
-        }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/images/hero/background.webp')" }}
       />
-
-      {/* Efek Cahaya */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: `
-            radial-gradient(circle at 25% 30%, rgba(34,211,238,.20), transparent 35%),
-            radial-gradient(circle at 80% 25%, rgba(59,130,246,.18), transparent 35%),
-            radial-gradient(circle at 60% 80%, rgba(125,211,252,.15), transparent 40%)
-          `,
-        }}
-      />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_34%,rgba(39,113,148,.28),transparent_28%),radial-gradient(circle_at_20%_72%,rgba(180,141,56,.13),transparent_26%),linear-gradient(120deg,rgba(7,20,38,.94)_0%,rgba(11,32,56,.78)_55%,rgba(7,23,40,.86)_100%)]" />
+      <div className="talent-grid absolute inset-0 opacity-30" />
+      <div className="absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-cyan-700/10 blur-[110px]" />
+      <div className="absolute -right-32 bottom-0 h-[30rem] w-[30rem] rounded-full bg-amber-500/10 blur-[130px]" />
     </div>
   );
 }

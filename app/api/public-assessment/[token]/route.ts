@@ -3,7 +3,7 @@ import { randomBytes } from "node:crypto";
 import { prisma } from "@/lib/prisma";
 import { failed, success } from "@/lib/response";
 import { serialize } from "@/lib/serializer";
-import { getNextQuestion, getProgress, saveAnswer } from "@/services/assessment.service";
+import { getNextQuestion, getProgress, saveOptionAnswer } from "@/services/assessment.service";
 import { calculateDimensionResult, calculateProfessionResult } from "@/services/assessment-result.service";
 
 async function getOwner(token: string) {
@@ -76,19 +76,16 @@ export async function PATCH(request: Request, context: RouteContext<"/api/public
 
     if (body.action === "answer") {
       const questionId = String(body.question_id ?? "");
-      const answerValue = Number(body.answer_value);
-      if (!/^\d+$/.test(questionId) || !Number.isInteger(answerValue) || answerValue < 1 || answerValue > 5) {
+      const optionId = Number(body.option_id);
+      if (!/^\d+$/.test(questionId) || !Number.isInteger(optionId)) {
         return failed("Jawaban tidak valid.", 400);
       }
-
-      const question = await prisma.question.findFirst({
-        where: {
-          question_id: BigInt(questionId),
-          dimension: { profession_id: session.biodata.profession_id },
-        },
-      });
-      if (!question) return failed("Pertanyaan tidak valid.", 400);
-      await saveAnswer(session.assessment_id, question.question_id, answerValue);
+      await saveOptionAnswer(
+        session.assessment_id,
+        session.biodata.profession_id,
+        BigInt(questionId),
+        optionId
+      );
     }
 
     if (body.action === "finish") {

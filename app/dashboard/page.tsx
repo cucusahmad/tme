@@ -166,7 +166,7 @@ export default function DashboardPage() {
       complete: assessmentComplete,
     },
     {
-      title: "Lihat hasil talent match",
+      title: "Lihat hasil pemetaan talenta",
       description: assessmentComplete ? "Hasil Anda sudah tersedia" : "Tersedia setelah assessment selesai",
       href: "/dashboard/result",
       complete: assessmentComplete,
@@ -201,13 +201,14 @@ export default function DashboardPage() {
         </div>
       )}
 
-      <section className="relative overflow-hidden rounded-3xl bg-slate-950 px-6 py-8 text-white shadow-xl shadow-slate-900/10 sm:px-8 sm:py-10 lg:px-10">
-        <div className="absolute -right-20 -top-28 h-72 w-72 rounded-full bg-blue-500/25 blur-3xl" />
-        <div className="absolute -bottom-32 right-1/3 h-64 w-64 rounded-full bg-cyan-400/15 blur-3xl" />
+      <section className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#07182d] px-6 py-8 text-white shadow-2xl shadow-slate-900/15 sm:px-8 sm:py-10 lg:px-10">
+        <div className="talent-dashboard-grid absolute inset-0 opacity-60" />
+        <div className="absolute -right-20 -top-28 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
+        <div className="absolute -bottom-32 right-1/3 h-64 w-64 rounded-full bg-amber-400/15 blur-3xl" />
         <div className="relative grid items-center gap-8 lg:grid-cols-[1fr_280px]">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-semibold text-blue-100">
-              <Sparkles size={14} /> Ruang pengembangan Anda
+            <span className="inline-flex items-center gap-2 rounded-full border border-amber-300/20 bg-amber-300/10 px-3 py-1.5 text-xs font-semibold text-amber-200">
+              <Sparkles size={14} /> Talent journey Anda
             </span>
             <h1 className="mt-5 max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
               Selamat datang{firstName ? `, ${firstName}` : ""}!
@@ -215,7 +216,7 @@ export default function DashboardPage() {
             <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
               Kenali potensi terbaik Anda dan lanjutkan setiap tahap untuk mendapatkan rekomendasi karier yang lebih personal.
             </p>
-            <Link href={profilePercent < 100 ? "/dashboard/profile" : assessmentComplete ? "/dashboard/result" : "/dashboard/assessment"} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold shadow-lg shadow-blue-950/30 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-300">
+            <Link href={profilePercent < 100 ? "/dashboard/profile" : assessmentComplete ? "/dashboard/result" : "/dashboard/assessment"} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-amber-400 px-5 py-3 text-sm font-bold text-[#07182d] shadow-lg shadow-amber-950/30 transition hover:bg-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-200">
               {profilePercent < 100 ? "Lengkapi biodata" : assessmentComplete ? "Lihat hasil assessment" : "Mulai assessment"}
               <ArrowRight size={17} />
             </Link>
@@ -225,12 +226,12 @@ export default function DashboardPage() {
             <div className="flex items-end justify-between">
               <div>
                 <p className="text-sm text-slate-300">Progress keseluruhan</p>
-                <p className="mt-1 text-4xl font-bold">{overallProgress}<span className="text-xl text-blue-300">%</span></p>
+                <p className="mt-1 text-4xl font-bold">{overallProgress}<span className="text-xl text-amber-300">%</span></p>
               </div>
-              <Target className="text-blue-300" size={28} />
+              <Target className="text-amber-300" size={28} />
             </div>
             <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-white/10" role="progressbar" aria-label="Progress keseluruhan" aria-valuenow={overallProgress} aria-valuemin={0} aria-valuemax={100}>
-              <div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-[width] duration-700" style={{ width: `${overallProgress}%` }} />
+              <div className="h-full rounded-full bg-gradient-to-r from-amber-400 to-cyan-400 transition-[width] duration-700" style={{ width: `${overallProgress}%` }} />
             </div>
             <p className="mt-3 text-xs leading-5 text-slate-400">Berdasarkan biodata, assessment, dan rekomendasi Anda.</p>
           </div>
@@ -247,7 +248,7 @@ export default function DashboardPage() {
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <MetricCard icon={UserRound} label="Kelengkapan biodata" value={`${profilePercent}%`} description={profilePercent === 100 ? "Biodata sudah lengkap" : `${profileFields.length - profileProgress.completed} bagian perlu dilengkapi`} tone="blue" />
           <MetricCard icon={ClipboardList} label="Assessment" value={assessmentComplete ? "Selesai" : "Belum"} description={assessmentComplete ? "Hasil assessment tersedia" : "Assessment belum dikerjakan"} tone="indigo" />
-          <MetricCard icon={BarChart3} label="Talent match" value={topMatch?.percentage != null ? `${Math.round(topMatch.percentage)}%` : "—"} description={topMatch?.profession_unit?.unit_name ?? "Tersedia setelah assessment"} tone="emerald" />
+          <MetricCard icon={BarChart3} label="Pemetaan talenta" value={topMatch?.percentage != null ? `${Math.round(topMatch.percentage)}%` : "—"} description={topMatch?.profession_unit?.unit_name ?? "Tersedia setelah assessment"} tone="emerald" />
           <MetricCard icon={BriefcaseBusiness} label="Roadmap karier" value={hasRecommendation ? "Tersedia" : "Belum"} description={hasRecommendation ? "Rekomendasi siap dipelajari" : "Selesaikan assessment terlebih dahulu"} tone="amber" />
         </div>
       </section>
