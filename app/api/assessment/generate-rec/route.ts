@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
+import type { Prisma } from "@prisma/client";
 
 import { verifyToken } from "@/lib/jwt";
 import { prisma } from "@/lib/prisma";
@@ -7,6 +8,14 @@ import { prisma } from "@/lib/prisma";
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+type RankingItem = Prisma.assessment_resultGetPayload<{
+  include: { profession_unit: true };
+}>;
+
+type DimensionItem = Prisma.assessment_dimension_resultGetPayload<{
+  include: { dimension: true };
+}>;
 
 function getUserId(request: NextRequest): bigint {
   const token = request.cookies.get("token")?.value;
@@ -58,7 +67,7 @@ export async function POST(request: NextRequest) {
     |--------------------------------------------------------------------------
     */
 
-    const ranking =
+    const ranking: RankingItem[] =
       await prisma.assessment_result.findMany({
         where: {
           assessment: {
@@ -79,7 +88,7 @@ export async function POST(request: NextRequest) {
     |--------------------------------------------------------------------------
     */
 
-    const dimensions =
+    const dimensions: DimensionItem[] =
       await prisma.assessment_dimension_result.findMany({
         where: {
           assessment: {
