@@ -2,11 +2,13 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, BadgeCheck, ChevronRight, ShieldCheck } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function HeroContent() {
   return (
     <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="max-w-3xl">
+      <Image src="/images/logo-sipeta.png" alt="Logo SIPETA POLRI" width={280} height={280} priority className="mb-6 h-auto w-44 drop-shadow-[0_16px_30px_rgba(0,0,0,.3)] sm:w-52" />
       <div className="mb-7 inline-flex items-center gap-3 rounded-full border border-amber-300/25 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-[.2em] text-amber-200 backdrop-blur-md">
         <ShieldCheck size={16} /> Sistem Informasi SDM Polri
       </div>

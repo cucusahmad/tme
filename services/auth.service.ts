@@ -60,17 +60,19 @@ export async function loginAccount(
     throw new Error("INVALID_CREDENTIAL");
   }
 
+  const role = user.role.trim().toUpperCase();
+
   const token = generateToken({
     user_id: user.user_id.toString(),
     email: user.email,
-    role: user.role,
+    role,
   });
 
   return {
     user: {
       user_id: user.user_id,
       email: user.email,
-      role: user.role,
+      role,
       is_active: user.is_active,
       created_at: user.created_at,
       updated_at: user.updated_at,

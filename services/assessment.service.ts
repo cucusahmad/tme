@@ -152,7 +152,7 @@ export async function saveOptionAnswer(
 
   const answerValue = Number(option.weight);
 
-  if (!Number.isInteger(answerValue) || answerValue < 0 || answerValue > 5) {
+  if (!Number.isInteger(answerValue) || answerValue < 0 || answerValue > 2) {
     throw new Error("INVALID_QUESTION_OPTION_WEIGHT");
   }
 
@@ -280,7 +280,7 @@ export async function calculateDimensionResult(
     const percentage =
       (
         score /
-        (value.count * 5)
+        (value.count * 2)
       ) *
       100;
 

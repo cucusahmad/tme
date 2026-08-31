@@ -19,16 +19,24 @@ export async function requireAdmin() {
     redirect("/auth/login");
   }
 
-  if (payload.role !== "ADMIN") redirect("/dashboard");
+  let userId: bigint;
+
+  try {
+    userId = BigInt(payload.user_id);
+  } catch {
+    redirect("/auth/login");
+  }
 
   const admin = await prisma.users.findUnique({
-    where: { user_id: BigInt(payload.user_id) },
+    where: { user_id: userId },
     select: { user_id: true, email: true, role: true, is_active: true },
   });
 
-  if (!admin || !admin.is_active || admin.role !== "ADMIN") {
+  if (!admin || !admin.is_active) {
     redirect("/auth/login");
   }
+
+  if (admin.role.trim().toUpperCase() !== "ADMIN") redirect("/dashboard");
 
   return admin;
 }

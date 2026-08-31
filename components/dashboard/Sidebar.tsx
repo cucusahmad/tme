@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { BarChart3, BookOpenCheck, BriefcaseBusiness, ChevronLeft, ChevronRight, ClipboardCheck, LayoutDashboard, ShieldCheck, UserRound } from "lucide-react";
+import Image from "next/image";
+import { BarChart3, BookOpenCheck, BriefcaseBusiness, ChevronLeft, ChevronRight, ClipboardCheck, KeyRound, LayoutDashboard, UserRound } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 import LogoutButton from "./LogoutButton";
 
@@ -12,6 +13,7 @@ const menus = [
   { href: "/dashboard/result", icon: BarChart3, title: "Peta Potensi" },
   { href: "/dashboard/recommendation", icon: BriefcaseBusiness, title: "Rekomendasi Karier" },
   { href: "/dashboard/training", icon: BookOpenCheck, title: "Pengembangan" },
+  { href: "/dashboard/change-password", icon: KeyRound, title: "Ubah Password" },
 ];
 
 export default function Sidebar() {
@@ -21,10 +23,7 @@ export default function Sidebar() {
       <div className="flex h-full flex-col overflow-hidden">
         <div className={`flex h-24 items-center border-b border-white/10 ${collapsed ? "justify-center px-3" : "justify-between px-5"}`}>
           <div className="flex min-w-0 items-center gap-3">
-            <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-amber-300/30 bg-gradient-to-br from-amber-300 to-amber-500 text-[#07182d] shadow-lg shadow-amber-950/20">
-              <ShieldCheck size={25} strokeWidth={2.2} /><span className="absolute -bottom-1 h-1.5 w-5 rounded-full bg-white/80" />
-            </div>
-            {!collapsed && <div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-[0.24em] text-amber-300">Talent Match</p><h2 className="mt-0.5 truncate text-lg font-black tracking-tight">SIPETA POLRI</h2><p className="text-[11px] text-slate-400">Pemetaan & pengembangan</p></div>}
+            <Image src="/images/logo-sipeta.png" alt="SIPETA POLRI" width={180} height={180} priority className={collapsed ? "h-auto w-14" : "h-auto w-32"} />
           </div>
           {!collapsed && <button onClick={() => setCollapsed(true)} aria-label="Ciutkan navigasi" className="rounded-xl border border-white/10 p-2 text-slate-400 transition hover:bg-white/10 hover:text-white"><ChevronLeft size={17} /></button>}
         </div>

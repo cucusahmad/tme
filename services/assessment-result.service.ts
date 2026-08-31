@@ -76,7 +76,7 @@ export async function calculateDimensionResult(
   for (const [dimensionId, value] of dimensions) {
   const score = value.totalScore;
 
-  const maxScore = value.totalQuestion * 5;
+  const maxScore = value.totalQuestion * 2;
 
   const percentage =
     maxScore === 0

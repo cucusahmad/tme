@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Bell, Brain, LayoutDashboard, LogOut, Menu, Search, Users, X } from "lucide-react";
+import { Bell, Boxes, KeyRound, LayoutDashboard, ListChecks, LogOut, Menu, Search, Users, X } from "lucide-react";
 
 const menu = [
   { href: "/dashboard/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/admin/users", label: "Data Pengguna", icon: Users },
+  { href: "/dashboard/admin/dimensions", label: "Data Dimensi", icon: Boxes },
+  { href: "/dashboard/admin/questions", label: "Data Pertanyaan", icon: ListChecks },
+  { href: "/dashboard/admin/change-password", label: "Ubah Password", icon: KeyRound },
 ];
 
 export default function AdminShell({
@@ -30,13 +34,8 @@ export default function AdminShell({
   const sidebar = (
     <div className="flex h-full flex-col bg-slate-950 text-white">
       <div className="flex items-center gap-3 border-b border-white/10 px-6 py-6">
-        <div className="rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 p-3 shadow-lg shadow-cyan-950">
-          <Brain size={24} />
-        </div>
-        <div>
-          <p className="font-bold">SIPETA POLRI</p>
-          <p className="text-xs text-slate-400">Admin Panel</p>
-        </div>
+        <Image src="/images/logo-sipeta.png" alt="SIPETA POLRI" width={180} height={180} priority className="h-auto w-32" />
+        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Admin Panel</p>
       </div>
       <p className="px-6 pb-2 pt-6 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Menu Utama</p>
       <nav className="flex-1 space-y-2 px-4">

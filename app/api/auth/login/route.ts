@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
       success: true,
       message: "Login berhasil",
       data: serialize(result.user),
+      redirectTo: result.user.role === "ADMIN" ? "/dashboard/admin" : "/dashboard",
     });
 
     response.cookies.set("token", result.token, {

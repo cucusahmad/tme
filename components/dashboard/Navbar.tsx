@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Bell, ChevronRight, Menu, ShieldCheck, UserRound } from "lucide-react";
 
 const routeMeta = [
+  ["/dashboard/change-password", "Ubah Password", "Kelola keamanan akses akun Anda"],
   ["/dashboard/profile", "Profil Talenta", "Kelola identitas dan riwayat profesional Anda"],
   ["/dashboard/assessment", "Assessment", "Ukur kompetensi, potensi, dan preferensi kerja"],
   ["/dashboard/result", "Peta Potensi", "Kenali kekuatan dan kecocokan peran terbaik"],

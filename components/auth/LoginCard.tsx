@@ -31,10 +31,10 @@ export default function LoginCard() {
       });
 
       toast.success("Login berhasil");
-      const role = response.data.data.role;
+      const redirectTo = response.data.redirectTo;
 
       window.setTimeout(() => {
-        window.location.href = role === "ADMIN" ? "/dashboard/admin" : "/dashboard";
+        window.location.href = redirectTo === "/dashboard/admin" ? redirectTo : "/dashboard";
       }, 300);
     } catch (error: unknown) {
       const message =

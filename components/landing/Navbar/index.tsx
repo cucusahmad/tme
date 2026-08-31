@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, Shield, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const menus = [{ title: "Tentang", href: "#tentang" }, { title: "Manfaat", href: "#manfaat" }, { title: "Cara Kerja", href: "#cara-kerja" }, { title: "Pemetaan", href: "#pemetaan" }];
 export default function Navbar() {
@@ -9,7 +9,10 @@ export default function Navbar() {
   useEffect(() => { const handler = () => setScrolled(window.scrollY > 24); handler(); window.addEventListener("scroll", handler); return () => window.removeEventListener("scroll", handler); }, []);
   return <header className={`fixed inset-x-0 top-0 z-50 transition-all ${scrolled ? "border-b border-slate-200/80 bg-white/95 shadow-sm backdrop-blur-xl" : "bg-transparent"}`}>
     <div className="mx-auto flex h-24 max-w-7xl items-center justify-between px-6 lg:px-8">
-      <Link href="#beranda" className="flex items-center gap-3" onClick={() => setOpen(false)}><span className={`flex h-12 w-12 items-center justify-center rounded-xl border ${scrolled ? "border-[#0b2744] bg-[#0b2744] text-amber-300" : "border-white/20 bg-white/10 text-amber-300"}`}><Shield size={24} /></span><span><strong className={`block text-lg tracking-[.08em] ${scrolled ? "text-[#08182b]" : "text-white"}`}>SIPETA POLRI</strong><small className={scrolled ? "text-slate-500" : "text-slate-300"}>Sistem Informasi Pemetaan Talenta</small></span></Link>
+      <Link href="#beranda" className="flex flex-col" onClick={() => setOpen(false)}>
+        <span className={`text-lg font-black tracking-wide sm:text-xl ${scrolled ? "text-[#0b2744]" : "text-white"}`}>SIPETA POLRI</span>
+        <span className={`text-[10px] font-medium sm:text-xs ${scrolled ? "text-slate-500" : "text-slate-300"}`}>Sistem Informasi Pemetaan Talenta</span>
+      </Link>
       <nav className="hidden items-center gap-8 lg:flex">{menus.map(item => <Link key={item.title} href={item.href} className={`text-sm font-semibold transition ${scrolled ? "text-slate-600 hover:text-[#0b2744]" : "text-slate-200 hover:text-amber-300"}`}>{item.title}</Link>)}</nav>
       <Link href="/auth/login" className="hidden rounded-xl bg-amber-300 px-5 py-3 text-sm font-bold text-[#071426] transition hover:bg-amber-200 lg:block">Masuk Sistem</Link>
       <button type="button" aria-label="Buka navigasi" onClick={() => setOpen(!open)} className={`lg:hidden ${scrolled ? "text-slate-900" : "text-white"}`}>{open ? <X /> : <Menu />}</button>
