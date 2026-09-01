@@ -1,6 +1,18 @@
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 
+const MAX_SCORE_PER_QUESTION = 2;
+
+/**
+ * Kelompok nilai dimensi berdasarkan persentase kumulatif yang sudah
+ * dibulatkan ke dua angka desimal.
+ */
+export function getDimensionScore(percentage: number): 0 | 1 | 2 {
+  if (percentage >= 70) return 2;
+  if (percentage >= 40) return 1;
+  return 0;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Hitung Nilai Setiap Dimension
@@ -22,18 +34,6 @@ export async function calculateDimensionResult(
     },
     include: {
       question: true,
-    },
-  });
-
-  /*
-  |--------------------------------------------------------------------------
-  | Hapus hasil lama
-  |--------------------------------------------------------------------------
-  */
-
-  await prisma.assessment_dimension_result.deleteMany({
-    where: {
-      assessment_id: assessmentId,
     },
   });
 
@@ -73,32 +73,28 @@ export async function calculateDimensionResult(
   |--------------------------------------------------------------------------
   */
 
-  for (const [dimensionId, value] of dimensions) {
-  const score = value.totalScore;
+  const results = Array.from(dimensions, ([dimensionId, value]) => {
+    const maxScore = value.totalQuestion * MAX_SCORE_PER_QUESTION;
+    const percentage =
+      maxScore === 0
+        ? 0
+        : Number(((value.totalScore / maxScore) * 100).toFixed(2));
 
-  const maxScore = value.totalQuestion * 2;
-
-  const percentage =
-    maxScore === 0
-      ? 0
-      : Number(
-          ((score / maxScore) * 100).toFixed(2)
-        );
-
-  await prisma.assessment_dimension_result.create({
-    data: {
+    return {
       assessment_id: assessmentId,
-
       dimension_id: dimensionId,
-
-      score: new Prisma.Decimal(score),
-
-      percentage: new Prisma.Decimal(
-        percentage
-      ),
-    },
+      score: new Prisma.Decimal(getDimensionScore(percentage)),
+      percentage: new Prisma.Decimal(percentage),
+    };
   });
-}
+
+  // Penghapusan hasil lama dan penyimpanan hasil baru harus berhasil bersama.
+  await prisma.$transaction([
+    prisma.assessment_dimension_result.deleteMany({
+      where: { assessment_id: assessmentId },
+    }),
+    prisma.assessment_dimension_result.createMany({ data: results }),
+  ]);
 
   /*
   |--------------------------------------------------------------------------

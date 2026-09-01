@@ -37,9 +37,12 @@ export async function registerAccount(
 export async function loginAccount(
   data: LoginInput
 ) {
-  const user = await prisma.users.findUnique({
+  const user = await prisma.users.findFirst({
     where: {
-      email: data.email,
+      email: {
+        equals: data.email.trim(),
+        mode: "insensitive",
+      },
     },
   });
 

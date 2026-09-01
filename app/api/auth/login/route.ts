@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { ZodError } from "zod";
 
 import { LoginSchema } from "@/validations/auth-login";
 import { loginAccount } from "@/services/auth.service";
@@ -28,13 +29,43 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
-  } catch (error: any) {
-    console.error(error);
+  } catch (error: unknown) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: error.issues[0]?.message ?? "Data login tidak valid",
+        },
+        { status: 400 }
+      );
+    }
+
+    if (error instanceof Error && error.message === "INVALID_CREDENTIAL") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Email atau password salah",
+        },
+        { status: 401 }
+      );
+    }
+
+    if (error instanceof Error && error.message === "ACCOUNT_DISABLED") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Akun tidak aktif. Hubungi administrator.",
+        },
+        { status: 403 }
+      );
+    }
+
+    console.error("Login error:", error);
 
     return NextResponse.json(
       {
         success: false,
-        message: error.message,
+        message: "Terjadi kesalahan saat login",
       },
       {
         status: 500,

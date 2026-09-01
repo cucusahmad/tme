@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Prisma } from "@prisma/client";
 import {
   ArrowRight,
   BrainCircuit,
@@ -13,12 +14,27 @@ import {
 
 import { requireAdmin } from "@/lib/auth-session";
 import { prisma } from "@/lib/prisma";
+import RecommendationMapTable, { type RecommendationMapRow } from "./recommendation-map-table";
+
+const databaseUnavailableCodes = new Set(["P1001", "P1002", "P1008", "P1017"]);
+
+function isDatabaseUnavailable(error: unknown) {
+  return (
+    (error instanceof Prisma.PrismaClientKnownRequestError && databaseUnavailableCodes.has(error.code)) ||
+    (error instanceof Prisma.PrismaClientInitializationError &&
+      !!error.errorCode &&
+      databaseUnavailableCodes.has(error.errorCode))
+  );
+}
 
 export default async function AdminDashboardPage() {
   await requireAdmin();
 
-  const [totalUsers, activeUsers, completedProfiles, completedAssessments, recommendations, recentUsers] =
-    await Promise.all([
+  let databaseUnavailable = false;
+  let dashboardData;
+
+  try {
+    dashboardData = await Promise.all([
       prisma.users.count({ where: { role: "USER" } }),
       prisma.users.count({ where: { role: "USER", is_active: true } }),
       prisma.biodata.count({ where: { users: { role: "USER" } } }),
@@ -41,7 +57,62 @@ export default async function AdminDashboardPage() {
           },
         },
       }),
+      prisma.assessment.findMany({
+        where: {
+          status: "COMPLETED",
+          assessment_type: "SELF",
+          biodata: { users: { role: "USER" } },
+          assessment_result: { some: {} },
+        },
+        orderBy: [{ completed_at: "desc" }, { assessment_id: "desc" }],
+        select: {
+          assessment_id: true,
+          completed_at: true,
+          biodata: {
+            select: {
+              user_id: true,
+              nama_lengkap: true,
+              no_hp: true,
+            },
+          },
+          assessment_result: {
+            take: 3,
+            orderBy: [{ rank_order: "asc" }, { percentage: "desc" }],
+            select: {
+              percentage: true,
+              profession_unit: { select: { unit_name: true } },
+            },
+          },
+        },
+      }),
     ]);
+  } catch (error) {
+    if (!isDatabaseUnavailable(error)) throw error;
+
+    databaseUnavailable = true;
+    console.warn("Database dashboard admin tidak dapat dijangkau; menggunakan data kosong sementara.");
+    dashboardData = [0, 0, 0, 0, 0, [], []] as const;
+  }
+
+  const [totalUsers, activeUsers, completedProfiles, completedAssessments, recommendations, recentUsers, completedAssessmentResults] =
+    dashboardData;
+
+  const mappedUserIds = new Set<string>();
+  const recommendationRows: RecommendationMapRow[] = completedAssessmentResults.filter((assessment) => {
+    const userId = assessment.biodata.user_id.toString();
+    if (mappedUserIds.has(userId)) return false;
+    mappedUserIds.add(userId);
+    return true;
+  }).map((assessment) => ({
+    assessmentId: assessment.assessment_id.toString(),
+    userId: assessment.biodata.user_id.toString(),
+    name: assessment.biodata.nama_lengkap || "Nama belum dilengkapi",
+    phone: assessment.biodata.no_hp,
+    recommendations: assessment.assessment_result.map((result) => ({
+      unitName: result.profession_unit.unit_name,
+      percentage: Number(result.percentage),
+    })),
+  }));
 
   const completionRate = totalUsers ? Math.round((completedAssessments / totalUsers) * 100) : 0;
   const profileRate = totalUsers ? Math.round((completedProfiles / totalUsers) * 100) : 0;
@@ -55,6 +126,11 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-7">
+      {databaseUnavailable && (
+        <div role="alert" className="rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-800">
+          Data dashboard belum dapat dimuat karena koneksi database sedang tidak tersedia. Tampilan sementara menggunakan data kosong.
+        </div>
+      )}
       <section className="relative overflow-hidden rounded-[2rem] bg-slate-950 px-6 py-8 text-white shadow-xl shadow-slate-200 sm:px-9">
         <div className="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
         <div className="absolute bottom-0 right-1/3 h-36 w-36 rounded-full bg-indigo-500/20 blur-3xl" />
@@ -113,6 +189,17 @@ export default async function AdminDashboardPage() {
           </div>
           <div className="mt-8 rounded-xl bg-slate-50 p-4 text-sm leading-6 text-slate-600"><span className="font-bold text-slate-900">{Math.max(totalUsers - completedAssessments, 0)} pengguna</span> masih perlu menyelesaikan assessment.</div>
         </div>
+      </section>
+
+      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="flex flex-col justify-between gap-3 border-b border-slate-100 px-5 py-5 sm:flex-row sm:items-center sm:px-6">
+          <div>
+            <h2 className="font-bold text-slate-900">Peta Rekomendasi Pengguna</h2>
+            <p className="mt-1 text-xs text-slate-500">Tiga unit profesi dengan bobot kecocokan tertinggi dari score assessment terbaru</p>
+          </div>
+          <Link href="/dashboard/admin/users" className="text-sm font-semibold text-cyan-700 hover:text-cyan-800">Lihat seluruh pengguna</Link>
+        </div>
+        <RecommendationMapTable rows={recommendationRows} />
       </section>
     </div>
   );
