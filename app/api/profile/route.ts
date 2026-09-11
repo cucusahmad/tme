@@ -5,6 +5,7 @@ import { getBiodata, saveBiodata } from "@/services/biodata.service";
 import { success, failed } from "@/lib/response";
 import { serialize } from "@/lib/serializer";
 import { verifyToken } from "@/lib/jwt";
+import { BiodataSchema } from "@/validations/biodata";
 
 function getUserId(request: NextRequest): bigint {
   const token =
@@ -38,11 +39,11 @@ export async function GET(
       serialize(biodata),
       "Berhasil mengambil biodata."
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error(error);
 
     if (
-      error.message === "UNAUTHORIZED"
+      error instanceof Error && error.message === "UNAUTHORIZED"
     ) {
       return failed(
         "Unauthorized",
@@ -69,7 +70,11 @@ export async function PUT(
   try {
     const userId = getUserId(request);
 
-    const body = await request.json();
+    let body = await request.json();
+    const parsed = BiodataSchema.safeParse(body);
+    if (!parsed.success) return failed("Data biodata tidak valid.", 400);
+    // Strip unrelated fields and nested Prisma operations before saving profile data.
+    body = parsed.data;
     if (body.tanggal_lahir) {
   body.tanggal_lahir = new Date(
     `${body.tanggal_lahir}T00:00:00.000Z`
@@ -95,15 +100,15 @@ export async function PUT(
       serialize(biodata),
       "Biodata berhasil disimpan."
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error(error);
 
-    if (error.message === "UNAUTHORIZED") {
+    if (error instanceof Error && error.message === "UNAUTHORIZED") {
       return failed("Unauthorized", 401);
     }
 
     return failed(
-      error.message,
+      "Gagal menyimpan biodata.",
       500
     );
   }

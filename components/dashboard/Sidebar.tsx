@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { BarChart3, BookOpenCheck, BriefcaseBusiness, ChevronLeft, ChevronRight, ClipboardCheck, KeyRound, LayoutDashboard, UserRound } from "lucide-react";
+import { Building2, Users, BarChart3, BookOpenCheck, BriefcaseBusiness, ChevronLeft, ChevronRight, ClipboardCheck, KeyRound, LayoutDashboard, UserRound } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 import LogoutButton from "./LogoutButton";
 
-const menus = [
+const baseMenus = [
   { href: "/dashboard", icon: LayoutDashboard, title: "Ikhtisar" },
   { href: "/dashboard/profile", icon: UserRound, title: "Profil Talenta" },
+  { href: "/dashboard/organization", icon: Building2, title: "Organisasi & Mentor" },
   { href: "/dashboard/assessment", icon: ClipboardCheck, title: "Assessment" },
   { href: "/dashboard/result", icon: BarChart3, title: "Peta Potensi" },
   { href: "/dashboard/recommendation", icon: BriefcaseBusiness, title: "Rekomendasi Karier" },
@@ -16,7 +17,8 @@ const menus = [
   { href: "/dashboard/change-password", icon: KeyRound, title: "Ubah Password" },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ isSupervisor = false }: { isSupervisor?: boolean }) {
+  const menus = isSupervisor ? [...baseMenus, { href: "/dashboard/organization/manage", icon: Users, title: "Kelola Organisasi" }] : baseMenus;
   const [collapsed, setCollapsed] = useState(false);
   return (
     <aside className={`${collapsed ? "w-24" : "w-72"} h-screen border-r border-white/10 bg-[#07182d] text-white shadow-2xl shadow-slate-950/20 transition-[width] duration-300`}>

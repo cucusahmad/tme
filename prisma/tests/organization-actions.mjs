@@ -12,6 +12,7 @@ const rows = [
 const matches = (row, where) => Object.entries(where).every(([key, value]) =>
   value && typeof value === "object" ? value.in.includes(row[key]) : row[key] === value);
 const tx = {
+  organization_join_request: { updateMany: async () => ({ count: 0 }) },
   organization: { findUnique: async ({ where }) => [10n, 20n].includes(where.organization_id) ? { is_active: true } : null },
   users: {
     findUnique: async ({ where }) => rows.find(row => matches(row, where)),

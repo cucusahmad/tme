@@ -8,6 +8,33 @@ Pilihan profesi, dimensi, pertanyaan, dan bobot mengikuti data yang dikonfiguras
 
 Aplikasi dibangun menggunakan Next.js, React, dan Prisma.
 
+## Organisasi dan Mentor
+
+Pengguna membuka menu **Organisasi & Mentor** untuk mengajukan keanggotaan.
+Supervisor organisasi tujuan memproses permintaan melalui **Kelola Organisasi**.
+Setelah disetujui, pengguna dapat memilih anggota aktif dari organisasi yang sama
+sebagai mentor. Supervisor ditetapkan oleh admin melalui Data Organisasi.
+
+Halaman supervisor menampilkan permintaan masuk, anggota organisasi, dan mentor
+yang sudah memiliki anggota bimbingan. Klik mentor untuk melihat anggotanya.
+Permintaan pindah tidak mengubah keanggotaan sampai disetujui; setelah pindah,
+peran pengguna kembali menjadi anggota dan hubungan mentor organisasi lama dilepas.
+Pengguna dapat membatalkan permintaan tertunda atau mengajukan ulang setelah ditolak.
+
+Saat memperbarui instalasi lain, jalankan `npx prisma migrate deploy` dan
+`npx prisma generate` sebelum build. Migrasi menambahkan tabel permintaan tanpa
+mengubah keanggotaan yang sudah ada.
+
+Pemeriksaan fitur:
+
+```bash
+node prisma/tests/organization-actions.mjs
+node prisma/tests/organization-membership.mjs
+node prisma/tests/profile-input.mjs
+```
+
+Uji membership menggunakan `DATABASE_URL` dan membatalkan seluruh transaksi data uji.
+
 ## Getting Started
 
 First, run the development server:

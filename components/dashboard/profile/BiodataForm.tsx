@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import api from "@/lib/api";
+import ProfilePhotoUpload from "./ProfilePhotoUpload";
 
 import toast from "react-hot-toast";
 
@@ -16,6 +17,8 @@ import {
 } from "@/validations/biodata";
 
 export default function BiodataForm() {
+
+  const [initialPhoto, setInitialPhoto] = useState<string | null>(null);
 
   const [loading, setLoading] =
     useState(true);
@@ -61,7 +64,8 @@ export default function BiodataForm() {
 
       ]);
 
-      reset(profile.data.data);
+      reset(profile.data.data ?? {});
+      setInitialPhoto(profile.data.data?.foto ?? null);
 
       setProfessions(
         profession.data.data
@@ -97,7 +101,7 @@ export default function BiodataForm() {
 
       await api.put(
         "/profile",
-        data
+        { ...data, foto: undefined }
       );
 
       toast.success(
@@ -142,6 +146,8 @@ export default function BiodataForm() {
       )}
       className="space-y-8 rounded-3xl bg-white p-8 shadow"
     >
+      <ProfilePhotoUpload initialPhoto={initialPhoto} />
+
           {/* ===========================
           DATA PRIBADI
       =========================== */}
@@ -841,54 +847,6 @@ focus:border-cyan-500
         </div>
 
       </div>
-            {/* ===========================
-          FOTO
-      =========================== */}
-
-      <div>
-
-        <h2 className="text-xl font-bold text-slate-900">
-          Foto Profil
-        </h2>
-
-        <p className="mt-1 text-sm text-slate-500">
-          Upload foto profil Anda (opsional).
-        </p>
-
-      </div>
-
-      <div>
-
-        <label className="mb-2 block font-medium text-slate-700">
-          Foto
-        </label>
-
-        <input
-          type="text"
-          placeholder="URL Foto atau path upload"
-          {...register("foto")}
-          className="
-w-full
-rounded-xl
-border
-border-slate-300
-bg-white
-px-4
-py-3
-text-slate-900
-placeholder:text-slate-400
-outline-none
-transition
-focus:border-cyan-500
-"
-        />
-
-        <p className="mt-1 text-sm text-red-500">
-          {errors.foto?.message}
-        </p>
-
-      </div>
-
       {/* ===========================
           BUTTON
       =========================== */}

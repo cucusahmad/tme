@@ -186,6 +186,29 @@ model organization {
   created_at      DateTime @default(now()) @db.Timestamp(6)
   updated_at      DateTime @default(now()) @updatedAt @db.Timestamp(6)
   members         users[]
+  join_requests   organization_join_request[]
+}
+
+enum organization_request_status {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+model organization_join_request {
+  request_id      BigInt                      @id @default(autoincrement())
+  user_id         BigInt                      @unique
+  organization_id BigInt
+  status          organization_request_status @default(PENDING)
+  created_at      DateTime                    @default(now()) @db.Timestamp(6)
+  reviewed_at     DateTime?                   @db.Timestamp(6)
+  reviewed_by     BigInt?
+  user            users                       @relation("OrganizationApplicant", fields: [user_id], references: [user_id], onDelete: Cascade)
+  organization    organization                @relation(fields: [organization_id], references: [organization_id], onDelete: Cascade)
+  reviewer        users?                      @relation("OrganizationReviewer", fields: [reviewed_by], references: [user_id], onDelete: SetNull)
+
+  @@index([organization_id, status], map: "idx_organization_requests_status")
 }
 
 /// Database checks prevent self-mentoring and supervisors without an organization.
@@ -205,6 +228,8 @@ model users {
   organization      organization?     @relation(fields: [organization_id], references: [organization_id], onDelete: Restrict, onUpdate: Cascade, map: "fk_users_organization")
   mentor            users?            @relation("UserMentorship", fields: [mentor_id], references: [user_id], onDelete: SetNull, onUpdate: Cascade, map: "fk_users_mentor")
   mentees           users[]           @relation("UserMentorship")
+  organization_request organization_join_request? @relation("OrganizationApplicant")
+  reviewed_requests organization_join_request[] @relation("OrganizationReviewer")
 
   @@index([organization_id, organization_role], map: "idx_users_organization_role")
   @@index([mentor_id], map: "idx_users_mentor")

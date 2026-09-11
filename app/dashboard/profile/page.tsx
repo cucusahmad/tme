@@ -1,4 +1,5 @@
-import BiodataForm from "@/components/dashboard/profile//BiodataForm";
+import Link from "next/link";
+import BiodataForm from "@/components/dashboard/profile/BiodataForm";
 
 export default function ProfilePage() {
   return (
@@ -15,6 +16,10 @@ export default function ProfilePage() {
         </p>
 
       </div>
+
+      <Link href="/dashboard/organization" className="inline-block rounded-xl bg-cyan-50 px-4 py-3 text-sm font-semibold text-cyan-800 hover:bg-cyan-100">
+        Pengaturan Organisasi &amp; Mentor →
+      </Link>
 
       <BiodataForm />
 

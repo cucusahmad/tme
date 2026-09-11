@@ -54,6 +54,10 @@ export async function assignUserOrganization(_state: OrganizationActionState, fo
         where: { user_id: userId.data, role: "USER" },
         data: { organization_id: nextOrganizationId, ...(changed ? { organization_role: "MEMBER" as const, mentor_id: null } : {}), updated_at: new Date() },
       });
+      if (changed) await tx.organization_join_request.updateMany({
+        where: { user_id: userId.data, status: "PENDING" },
+        data: { status: "CANCELLED", reviewed_at: new Date() },
+      });
       return updated.count ? { success: true, message: "Organisasi pengguna berhasil disimpan." } : { success: false, message: "Pengguna tidak ditemukan." };
     }, { isolationLevel: "Serializable" });
     if (result.success) refresh();
