@@ -4,11 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Bell, Boxes, KeyRound, LayoutDashboard, ListChecks, LogOut, Menu, Search, Users, X } from "lucide-react";
+import { Bell, Boxes, Building2, KeyRound, LayoutDashboard, ListChecks, LogOut, Menu, Search, Users, X } from "lucide-react";
 
 const menu = [
   { href: "/dashboard/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/admin/users", label: "Data Pengguna", icon: Users },
+  { href: "/dashboard/admin/organizations", label: "Data Organisasi", icon: Building2 },
   { href: "/dashboard/admin/dimensions", label: "Data Dimensi", icon: Boxes },
   { href: "/dashboard/admin/questions", label: "Data Pertanyaan", icon: ListChecks },
   { href: "/dashboard/admin/change-password", label: "Ubah Password", icon: KeyRound },
@@ -34,7 +35,7 @@ export default function AdminShell({
   const sidebar = (
     <div className="flex h-full flex-col bg-slate-950 text-white">
       <div className="flex items-center gap-3 border-b border-white/10 px-6 py-6">
-        <Image src="/images/logo-sipeta.png" alt="SIPETA POLRI" width={180} height={180} priority className="h-auto w-32" />
+        <Image src="/images/logo-talent-match.svg" alt="Talent Match Ecosystem" width={240} height={150} preload className="h-auto w-32" />
         <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Admin Panel</p>
       </div>
       <p className="px-6 pb-2 pt-6 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Menu Utama</p>
@@ -70,7 +71,7 @@ export default function AdminShell({
         {sidebar}
       </aside>
       <div className="lg:ml-72">
-        <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-slate-200/80 bg-white/85 px-5 backdrop-blur-xl lg:px-8">
+        <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-slate-200/80 bg-white px-5 lg:px-8">
           <button aria-label="Buka menu" onClick={() => setOpen(true)} className="rounded-lg p-2 lg:hidden"><Menu /></button>
           <div className="hidden items-center gap-2 rounded-xl bg-slate-100 px-3 py-2 text-sm text-slate-400 md:flex"><Search size={16}/><span>Pencarian cepat</span></div>
           <div className="ml-auto flex items-center gap-4">

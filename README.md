@@ -1,4 +1,12 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Talent Match Ecosystem
+
+`talent_match_ecosystem` adalah aplikasi untuk mengenali potensi individu, mencocokkan kompetensi dengan profesi, dan membantu pengembangan karier.
+
+Pengguna melengkapi profil dan memilih bidang profesi, mengikuti asesmen, kemudian melihat peringkat kecocokan peran serta rekomendasi pengembangan. Pencocokan saat ini membandingkan peran dalam bidang yang dipilih menggunakan hasil dimensi asesmen dan bobot kompetensi pada katalog profesi. Skor merupakan alat bantu eksplorasi, bukan jaminan keberhasilan karier.
+
+Pilihan profesi, dimensi, pertanyaan, dan bobot mengikuti data yang dikonfigurasi di database. Contoh profesi dan skor pada halaman depan hanya ilustrasi.
+
+Aplikasi dibangun menggunakan Next.js, React, dan Prisma.
 
 ## Getting Started
 
@@ -18,7 +26,17 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Untuk penggunaan lokal sehari-hari atau mengukur performa, gunakan mode production:
+
+```bash
+npm run build
+npm run start
+```
+
+Hentikan server development terlebih dahulu dengan Ctrl+C. Build cukup diulang
+setelah perubahan kode. `npm run dev` ditujukan untuk pengembangan: kompilasi
+sesuai permintaan dan hot reload menambah penggunaan CPU/RAM pada komputer
+yang juga menjalankan browser.
 
 ## Learn More
 

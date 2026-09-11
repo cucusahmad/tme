@@ -166,7 +166,7 @@ export default function DashboardPage() {
       complete: assessmentComplete,
     },
     {
-      title: "Lihat hasil pemetaan talenta",
+      title: "Lihat kecocokan profesi Anda",
       description: assessmentComplete ? "Hasil Anda sudah tersedia" : "Tersedia setelah assessment selesai",
       href: "/dashboard/result",
       complete: assessmentComplete,
@@ -248,7 +248,7 @@ export default function DashboardPage() {
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <MetricCard icon={UserRound} label="Kelengkapan biodata" value={`${profilePercent}%`} description={profilePercent === 100 ? "Biodata sudah lengkap" : `${profileFields.length - profileProgress.completed} bagian perlu dilengkapi`} tone="blue" />
           <MetricCard icon={ClipboardList} label="Assessment" value={assessmentComplete ? "Selesai" : "Belum"} description={assessmentComplete ? "Hasil assessment tersedia" : "Assessment belum dikerjakan"} tone="indigo" />
-          <MetricCard icon={BarChart3} label="Pemetaan talenta" value={topMatch?.percentage != null ? `${Math.round(topMatch.percentage)}%` : "—"} description={topMatch?.profession_unit?.unit_name ?? "Tersedia setelah assessment"} tone="emerald" />
+          <MetricCard icon={BarChart3} label="Kecocokan profesi" value={topMatch?.percentage != null ? `${Math.round(topMatch.percentage)}%` : "—"} description={topMatch?.profession_unit?.unit_name ?? "Tersedia setelah assessment"} tone="emerald" />
           <MetricCard icon={BriefcaseBusiness} label="Roadmap karier" value={hasRecommendation ? "Tersedia" : "Belum"} description={hasRecommendation ? "Rekomendasi siap dipelajari" : "Selesaikan assessment terlebih dahulu"} tone="amber" />
         </div>
       </section>

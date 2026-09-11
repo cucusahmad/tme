@@ -23,7 +23,7 @@ export default function Sidebar() {
       <div className="flex h-full flex-col overflow-hidden">
         <div className={`flex h-24 items-center border-b border-white/10 ${collapsed ? "justify-center px-3" : "justify-between px-5"}`}>
           <div className="flex min-w-0 items-center gap-3">
-            <Image src="/images/logo-sipeta.png" alt="SIPETA POLRI" width={180} height={180} priority className={collapsed ? "h-auto w-14" : "h-auto w-32"} />
+            <Image src="/images/logo-talent-match.svg" alt="Talent Match Ecosystem" width={240} height={150} preload className={collapsed ? "h-auto w-14" : "h-auto w-32"} />
           </div>
           {!collapsed && <button onClick={() => setCollapsed(true)} aria-label="Ciutkan navigasi" className="rounded-xl border border-white/10 p-2 text-slate-400 transition hover:bg-white/10 hover:text-white"><ChevronLeft size={17} /></button>}
         </div>

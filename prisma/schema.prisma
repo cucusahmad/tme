@@ -173,15 +173,41 @@ model question {
   @@index([dimension_id], map: "idx_question_dimension")
 }
 
+enum organization_role {
+  MEMBER
+  SUPERVISOR
+}
+
+model organization {
+  organization_id BigInt   @id @default(autoincrement())
+  name            String   @db.VarChar(150)
+  description     String?
+  is_active       Boolean  @default(true)
+  created_at      DateTime @default(now()) @db.Timestamp(6)
+  updated_at      DateTime @default(now()) @updatedAt @db.Timestamp(6)
+  members         users[]
+}
+
+/// Database checks prevent self-mentoring and supervisors without an organization.
 model users {
-  user_id    BigInt    @id @default(autoincrement())
-  email      String    @unique @db.VarChar(150)
-  password   String    @db.VarChar(255)
-  role       String    @default("USER") @db.VarChar(20)
-  is_active  Boolean?  @default(true)
-  created_at DateTime? @default(now()) @db.Timestamp(6)
-  updated_at DateTime? @default(now()) @db.Timestamp(6)
-  biodata    biodata?
+  user_id           BigInt            @id @default(autoincrement())
+  email             String            @unique @db.VarChar(150)
+  password          String            @db.VarChar(255)
+  role              String            @default("USER") @db.VarChar(20)
+  is_active         Boolean?          @default(true)
+  created_at        DateTime?         @default(now()) @db.Timestamp(6)
+  updated_at        DateTime?         @default(now()) @db.Timestamp(6)
+  biodata           biodata?
+  /// Nullable while existing accounts await organization assignment.
+  organization_id   BigInt?
+  organization_role organization_role @default(MEMBER)
+  mentor_id         BigInt?
+  organization      organization?     @relation(fields: [organization_id], references: [organization_id], onDelete: Restrict, onUpdate: Cascade, map: "fk_users_organization")
+  mentor            users?            @relation("UserMentorship", fields: [mentor_id], references: [user_id], onDelete: SetNull, onUpdate: Cascade, map: "fk_users_mentor")
+  mentees           users[]           @relation("UserMentorship")
+
+  @@index([organization_id, organization_role], map: "idx_users_organization_role")
+  @@index([mentor_id], map: "idx_users_mentor")
 }
 
 model assessment_ai_recommendation {

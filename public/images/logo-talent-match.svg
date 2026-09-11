@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 150" role="img" aria-labelledby="title">
+  <title id="title">Talent Match Ecosystem</title>
+  <rect width="240" height="150" rx="22" fill="#0b2744"/>
+  <path d="M88 47h64M103 32l34 30M137 32l-34 30" stroke="#22d3ee" stroke-width="4" stroke-linecap="round"/>
+  <g fill="#fcd34d"><circle cx="88" cy="47" r="8"/><circle cx="152" cy="47" r="8"/><circle cx="103" cy="32" r="7"/><circle cx="137" cy="32" r="7"/><circle cx="103" cy="62" r="7"/><circle cx="137" cy="62" r="7"/></g>
+  <text x="120" y="103" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="25" font-weight="700">Talent Match</text>
+  <text x="120" y="127" text-anchor="middle" fill="#a5f3fc" font-family="Arial, sans-serif" font-size="12" letter-spacing="4">ECOSYSTEM</text>
+</svg>

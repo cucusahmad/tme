@@ -58,11 +58,11 @@ export default function RankingTable({
       <div className="border-b border-slate-200 p-6">
 
         <h2 className="text-2xl font-bold text-slate-900">
-          Peringkat Pemetaan Talenta
+          Peringkat Kecocokan Profesi
         </h2>
 
         <p className="mt-1 text-slate-500">
-          Seluruh unit profesi berdasarkan tingkat kecocokan.
+          Peringkat peran dalam bidang pilihan Anda berdasarkan hasil asesmen.
         </p>
 
       </div>

@@ -56,19 +56,19 @@ export default function LoginCard() {
 
   return (
     <div className="relative z-20 mx-auto grid w-full max-w-5xl overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-2xl shadow-slate-950/30 lg:grid-cols-[0.9fr_1.1fr]">
-      <section className="relative hidden overflow-hidden bg-slate-950 p-10 text-white lg:flex lg:flex-col lg:justify-between" aria-label="Tentang SIPETA POLRI">
+      <section className="relative hidden overflow-hidden bg-slate-950 p-10 text-white lg:flex lg:flex-col lg:justify-between" aria-label="Tentang Talent Match Ecosystem">
         <div className="absolute -left-24 -top-20 h-64 w-64 rounded-full bg-blue-600/30 blur-3xl" />
         <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-cyan-500/20 blur-3xl" />
 
         <div className="relative">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-semibold text-blue-100">
-            <Sparkles size={14} /> SIPETA POLRI
+            <Sparkles size={14} /> Talent Match Ecosystem
           </span>
           <h2 className="mt-7 text-3xl font-bold leading-tight tracking-tight">
             Temukan potensi terbaik untuk masa depan karier Anda.
           </h2>
           <p className="mt-4 text-sm leading-7 text-slate-300">
-            Memetakan Kompetensi, Mengarahkan Penempatan.
+            Kenali Potensi, Temukan Profesi yang Sesuai.
           </p>
         </div>
 

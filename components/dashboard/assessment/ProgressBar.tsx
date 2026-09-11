@@ -17,7 +17,7 @@ export default function ProgressBar({
         <div>
 
           <h2 className="text-2xl font-bold text-slate-900">
-            Assessment SIPETA POLRI
+            Assessment Talent Match Ecosystem
           </h2>
 
           <p className="text-sm text-slate-500">
