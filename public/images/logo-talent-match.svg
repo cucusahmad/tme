@@ -1,8 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 150" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 150" role="img" aria-labelledby="title desc">
   <title id="title">Talent Match Ecosystem</title>
-  <rect width="240" height="150" rx="22" fill="#0b2744"/>
-  <path d="M88 47h64M103 32l34 30M137 32l-34 30" stroke="#22d3ee" stroke-width="4" stroke-linecap="round"/>
-  <g fill="#fcd34d"><circle cx="88" cy="47" r="8"/><circle cx="152" cy="47" r="8"/><circle cx="103" cy="32" r="7"/><circle cx="137" cy="32" r="7"/><circle cx="103" cy="62" r="7"/><circle cx="137" cy="62" r="7"/></g>
-  <text x="120" y="103" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="25" font-weight="700">Talent Match</text>
-  <text x="120" y="127" text-anchor="middle" fill="#a5f3fc" font-family="Arial, sans-serif" font-size="12" letter-spacing="4">ECOSYSTEM</text>
+  <desc id="desc">Buku terbuka dan panah tumbuh melambangkan pendidikan, pengembangan potensi, dan arah karier.</desc>
+  <rect width="240" height="150" rx="22" fill="#faf7ee"/>
+  <g transform="translate(88 12)">
+    <rect width="64" height="64" rx="18" fill="#064e3b"/>
+    <path d="M13 27c7 0 13 3 19 8v19c-6-5-12-8-19-8V27Z" fill="#faf7ee"/>
+    <path d="M51 27c-7 0-13 3-19 8v19c6-5 12-8 19-8V27Z" fill="#a7d9bd"/>
+    <path d="M32 33V14m-7 7 7-7 7 7" fill="none" stroke="#fcd34d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="120" y="107" text-anchor="middle" fill="#064e3b" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="27" font-weight="700" letter-spacing="-1">Talent Match</text>
+  <text x="122" y="129" text-anchor="middle" fill="#926514" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="4">ECOSYSTEM</text>
 </svg>

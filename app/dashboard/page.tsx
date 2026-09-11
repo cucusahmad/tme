@@ -67,8 +67,8 @@ function MetricCard({
   tone: "blue" | "indigo" | "emerald" | "amber";
 }) {
   const tones = {
-    blue: "bg-blue-50 text-blue-600 ring-blue-100",
-    indigo: "bg-indigo-50 text-indigo-600 ring-indigo-100",
+    blue: "bg-emerald-50 text-emerald-600 ring-emerald-100",
+    indigo: "bg-emerald-50 text-emerald-700 ring-emerald-100",
     emerald: "bg-emerald-50 text-emerald-600 ring-emerald-100",
     amber: "bg-amber-50 text-amber-600 ring-amber-100",
   };
@@ -201,22 +201,22 @@ export default function DashboardPage() {
         </div>
       )}
 
-      <section className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#07182d] px-6 py-8 text-white shadow-2xl shadow-slate-900/15 sm:px-8 sm:py-10 lg:px-10">
+      <section className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#064e3b] px-6 py-8 text-white shadow-lg shadow-emerald-950/10 sm:px-8 sm:py-10 lg:px-10">
         <div className="talent-dashboard-grid absolute inset-0 opacity-60" />
-        <div className="absolute -right-20 -top-28 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
+        <div className="absolute -right-20 -top-28 h-72 w-72 rounded-full bg-emerald-500/20 blur-3xl" />
         <div className="absolute -bottom-32 right-1/3 h-64 w-64 rounded-full bg-amber-400/15 blur-3xl" />
         <div className="relative grid items-center gap-8 lg:grid-cols-[1fr_280px]">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-amber-300/20 bg-amber-300/10 px-3 py-1.5 text-xs font-semibold text-amber-200">
-              <Sparkles size={14} /> Talent journey Anda
+              <Sparkles size={14} /> Future Education & Career
             </span>
             <h1 className="mt-5 max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
               Selamat datang{firstName ? `, ${firstName}` : ""}!
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-              Kenali potensi terbaik Anda dan lanjutkan setiap tahap untuk mendapatkan rekomendasi karier yang lebih personal.
+              Setiap langkah membawa Anda lebih dekat pada masa depan. Lengkapi pendidikan Anda, petakan kompetensi, dan jelajahi arah karier yang sesuai.
             </p>
-            <Link href={profilePercent < 100 ? "/dashboard/profile" : assessmentComplete ? "/dashboard/result" : "/dashboard/assessment"} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-amber-400 px-5 py-3 text-sm font-bold text-[#07182d] shadow-lg shadow-amber-950/30 transition hover:bg-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-200">
+            <Link href={profilePercent < 100 ? "/dashboard/profile" : assessmentComplete ? "/dashboard/result" : "/dashboard/assessment"} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-amber-400 px-5 py-3 text-sm font-bold text-[#064e3b] shadow-lg shadow-amber-950/30 transition hover:bg-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-200">
               {profilePercent < 100 ? "Lengkapi biodata" : assessmentComplete ? "Lihat hasil assessment" : "Mulai assessment"}
               <ArrowRight size={17} />
             </Link>
@@ -231,7 +231,7 @@ export default function DashboardPage() {
               <Target className="text-amber-300" size={28} />
             </div>
             <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-white/10" role="progressbar" aria-label="Progress keseluruhan" aria-valuenow={overallProgress} aria-valuemin={0} aria-valuemax={100}>
-              <div className="h-full rounded-full bg-gradient-to-r from-amber-400 to-cyan-400 transition-[width] duration-700" style={{ width: `${overallProgress}%` }} />
+              <div className="h-full rounded-full bg-gradient-to-r from-amber-400 to-emerald-400 transition-[width] duration-700" style={{ width: `${overallProgress}%` }} />
             </div>
             <p className="mt-3 text-xs leading-5 text-slate-400">Berdasarkan biodata, assessment, dan rekomendasi Anda.</p>
           </div>
@@ -262,19 +262,19 @@ export default function DashboardPage() {
               <h2 id="profile-progress-title" className="text-xl font-bold text-slate-900">Kelengkapan profil</h2>
               <p className="mt-1 text-sm text-slate-500">Profil lengkap membuat hasil pencocokan lebih akurat.</p>
             </div>
-            <span className="rounded-full bg-blue-50 px-3 py-1.5 text-sm font-bold text-blue-700">{profilePercent}% lengkap</span>
+            <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-sm font-bold text-emerald-700">{profilePercent}% lengkap</span>
           </div>
           <div className="mt-6 h-3 overflow-hidden rounded-full bg-slate-100" role="progressbar" aria-label="Kelengkapan biodata" aria-valuenow={profilePercent} aria-valuemin={0} aria-valuemax={100}>
-            <div className="h-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-400 transition-[width] duration-700" style={{ width: `${profilePercent}%` }} />
+            <div className="h-full rounded-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-[width] duration-700" style={{ width: `${profilePercent}%` }} />
           </div>
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-slate-50 p-4">
             <div className="flex items-center gap-3">
-              <div className={`flex h-10 w-10 items-center justify-center rounded-full ${profilePercent === 100 ? "bg-emerald-100 text-emerald-600" : "bg-blue-100 text-blue-600"}`}>
+              <div className={`flex h-10 w-10 items-center justify-center rounded-full ${profilePercent === 100 ? "bg-emerald-100 text-emerald-600" : "bg-emerald-100 text-emerald-600"}`}>
                 {profilePercent === 100 ? <Check size={20} /> : <UserRound size={20} />}
               </div>
               <p className="text-sm font-medium text-slate-700">{profilePercent === 100 ? "Semua data utama sudah terisi." : "Lanjutkan pengisian data utama Anda."}</p>
             </div>
-            <Link href="/dashboard/profile" className="inline-flex items-center gap-1 text-sm font-semibold text-blue-700 hover:text-blue-600">Buka biodata <ChevronRight size={16} /></Link>
+            <Link href="/dashboard/profile" className="inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-600">Buka biodata <ChevronRight size={16} /></Link>
           </div>
         </section>
 
@@ -284,12 +284,12 @@ export default function DashboardPage() {
           <div className="mt-5 space-y-1">
             {steps.map((step) => (
               <Link key={step.title} href={step.href} className="group flex gap-3 rounded-xl p-3 transition hover:bg-slate-50">
-                {step.complete ? <CheckCircle2 className="mt-0.5 shrink-0 text-emerald-500" size={20} /> : <Circle className="mt-0.5 shrink-0 text-slate-300 group-hover:text-blue-500" size={20} />}
+                {step.complete ? <CheckCircle2 className="mt-0.5 shrink-0 text-emerald-500" size={20} /> : <Circle className="mt-0.5 shrink-0 text-slate-300 group-hover:text-emerald-500" size={20} />}
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-semibold text-slate-800">{step.title}</p>
                   <p className="mt-0.5 text-xs leading-5 text-slate-500">{step.description}</p>
                 </div>
-                <ChevronRight className="mt-1 shrink-0 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-blue-600" size={16} />
+                <ChevronRight className="mt-1 shrink-0 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-emerald-600" size={16} />
               </Link>
             ))}
           </div>

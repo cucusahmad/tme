@@ -19,7 +19,7 @@ export default function QuestionCard({
 
       <div className="mb-5">
 
-        <span className="inline-flex rounded-full bg-cyan-100 px-4 py-2 text-sm font-semibold text-cyan-700">
+        <span className="inline-flex rounded-full bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-700">
 
           {question.dimension?.dimension_name ??
             "Assessment"}

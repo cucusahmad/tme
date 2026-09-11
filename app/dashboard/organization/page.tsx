@@ -6,7 +6,7 @@ import { cancelOrganizationRequest, requestOrganization, selectMyMentor } from "
 
 const statusLabels = { PENDING: "Menunggu persetujuan", APPROVED: "Disetujui", REJECTED: "Ditolak", CANCELLED: "Dibatalkan" };
 const inputClass = "mt-2 block w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900";
-const buttonClass = "rounded-xl bg-cyan-700 px-5 py-3 text-sm font-semibold text-white hover:bg-cyan-800 disabled:opacity-50";
+const buttonClass = "rounded-xl bg-emerald-700 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-800 disabled:opacity-50";
 
 export default async function OrganizationSettingsPage() {
   const user = await requireMember();
@@ -25,10 +25,10 @@ export default async function OrganizationSettingsPage() {
   return <div className="mx-auto max-w-4xl space-y-6">
     <div><h1 className="text-3xl font-bold text-slate-900">Organisasi &amp; Mentor</h1><p className="mt-2 text-slate-500">Ajukan keanggotaan organisasi, lalu pilih mentor setelah supervisor menyetujui.</p></div>
     <section className="space-y-5 rounded-3xl bg-white p-6 shadow-sm sm:p-8">
-      <div><h2 className="text-xl font-bold text-slate-900">Organisasi Saya</h2><p className="mt-2 font-semibold text-cyan-800">{user.organization?.name ?? "Belum bergabung dengan organisasi"}</p>
+      <div><h2 className="text-xl font-bold text-slate-900">Organisasi Saya</h2><p className="mt-2 font-semibold text-emerald-800">{user.organization?.name ?? "Belum bergabung dengan organisasi"}</p>
         {user.organization && <p className="mt-1 text-sm text-slate-500">{user.organization_role === "SUPERVISOR" ? "Supervisor" : "Anggota"}{!user.organization.is_active ? " · Organisasi nonaktif" : " · Keanggotaan aktif"}</p>}
       </div>
-      {user.organization_role === "SUPERVISOR" && user.organization?.is_active && <Link href="/dashboard/organization/manage" className="inline-block font-semibold text-cyan-700 underline">Kelola permintaan dan anggota organisasi →</Link>}
+      {user.organization_role === "SUPERVISOR" && user.organization?.is_active && <Link href="/dashboard/organization/manage" className="inline-block font-semibold text-emerald-700 underline">Kelola permintaan dan anggota organisasi →</Link>}
       {request && <div className={`rounded-xl border p-4 ${pending ? "border-amber-200 bg-amber-50" : "border-slate-200 bg-slate-50"}`}>
         <p className="font-semibold text-slate-900">{request.organization.name}</p><p className="mt-1 text-sm text-slate-700">Status permintaan: {statusLabels[request.status]}</p>
         {request.status === "REJECTED" && <p className="mt-2 text-sm text-slate-600">Anda dapat mengajukan kembali atau memilih organisasi lain.</p>}

@@ -31,8 +31,8 @@ export default function CategoryFilter({
             }
             className={`rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 ${
               selected === category
-                ? "bg-cyan-600 text-white shadow-lg"
-                : "bg-white text-slate-700 shadow hover:bg-cyan-50"
+                ? "bg-emerald-600 text-white shadow-lg"
+                : "bg-white text-slate-700 shadow hover:bg-emerald-50"
             }`}
           >
 

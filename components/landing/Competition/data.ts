@@ -5,7 +5,7 @@ export const competitions = [
     level: "School Level",
     icon: "bot",
     fee: "IDR 300.000 / Team",
-    color: "from-cyan-500 to-blue-500",
+    color: "from-emerald-500 to-emerald-500",
     description:
       "Build an innovative robot with creativity and practical functionality.",
   },
@@ -25,7 +25,7 @@ export const competitions = [
     level: "University Level",
     icon: "graduation",
     fee: "FREE",
-    color: "from-sky-500 to-cyan-500",
+    color: "from-emerald-500 to-emerald-500",
     description:
       "Present innovative engineering and research-based robotic solutions.",
   },
@@ -35,7 +35,7 @@ export const competitions = [
     level: "University Level",
     icon: "cpu",
     fee: "FREE",
-    color: "from-indigo-500 to-purple-600",
+    color: "from-emerald-500 to-purple-600",
     description:
       "Design an intelligent autonomous robot capable of following dynamic tracks.",
   },

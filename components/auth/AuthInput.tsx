@@ -1,8 +1,10 @@
+import type { UseFormRegisterReturn } from "react-hook-form";
+
 interface Props {
   label: string;
   type: string;
   placeholder: string;
-  register: any;
+  register: UseFormRegisterReturn;
   error?: string;
   variant?: "dark" | "light";
   autoComplete?: string;
@@ -20,25 +22,27 @@ export default function AuthInput({
   return (
     <div>
 
-      <label className={`mb-2 block text-sm font-semibold ${variant === "light" ? "text-slate-700" : "text-slate-300"}`}>
+      <label htmlFor={register.name} className={`mb-2 block text-sm font-semibold ${variant === "light" ? "text-emerald-950" : "text-slate-300"}`}>
         {label}
       </label>
 
       <input
+        id={register.name}
         type={type}
         placeholder={placeholder}
         autoComplete={autoComplete}
         {...register}
         aria-invalid={Boolean(error)}
+        aria-describedby={error ? `${register.name}-error` : undefined}
         className={`w-full rounded-xl border px-4 py-3.5 outline-none transition placeholder:text-slate-400 focus:ring-4 ${
           variant === "light"
-            ? "border-slate-200 bg-slate-50 text-slate-900 focus:border-blue-500 focus:bg-white focus:ring-blue-100"
-            : "border-white/10 bg-white/5 text-white focus:border-cyan-400 focus:ring-cyan-400/10"
+            ? "border-emerald-900/15 bg-[#faf7ee]/50 text-emerald-950 focus:border-emerald-600 focus:bg-white focus:ring-emerald-100"
+            : "border-white/10 bg-white/5 text-white focus:border-emerald-400 focus:ring-emerald-400/10"
         } ${error ? "border-red-400" : ""}`}
       />
 
       {error && (
-        <p className="mt-2 text-sm text-red-400">
+        <p id={`${register.name}-error`} className={`mt-2 text-sm ${variant === "light" ? "text-red-600" : "text-red-400"}`}>
           {error}
         </p>
       )}

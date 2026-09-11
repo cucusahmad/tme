@@ -105,7 +105,7 @@ export default function RankingTable({
                     item.assessment_result_id ??
                     index
                   }
-                  className="border-b border-slate-100 hover:bg-cyan-50"
+                  className="border-b border-slate-100 hover:bg-emerald-50"
                 >
 
                   <td className="px-6 py-5">
@@ -135,7 +135,7 @@ export default function RankingTable({
 
                   <td className="px-6 py-5 text-center">
 
-                    <span className="rounded-full bg-cyan-100 px-4 py-2 font-bold text-cyan-700">
+                    <span className="rounded-full bg-emerald-100 px-4 py-2 font-bold text-emerald-700">
 
                       {Number(
                         item.percentage

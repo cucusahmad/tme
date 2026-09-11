@@ -125,7 +125,7 @@ export default function AssessmentCard() {
         <button
           type="button"
           onClick={() => router.push("/dashboard/profile")}
-          className="mt-6 rounded-xl bg-blue-600 px-8 py-3 font-semibold text-white shadow-md transition hover:bg-blue-700"
+          className="mt-6 rounded-xl bg-emerald-600 px-8 py-3 font-semibold text-white shadow-md transition hover:bg-emerald-700"
         >
           Lengkapi Biodata
         </button>
@@ -158,7 +158,7 @@ export default function AssessmentCard() {
               <button
                 onClick={finishAssessment}
                 disabled={submitting}
-                className="w-full sm:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold rounded-xl shadow-md transition duration-200"
+                className="w-full sm:w-auto px-8 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white font-semibold rounded-xl shadow-md transition duration-200"
               >
                 {submitting ? "Memproses Hasil..." : "Kirim & Lihat Hasil Assessment"}
               </button>

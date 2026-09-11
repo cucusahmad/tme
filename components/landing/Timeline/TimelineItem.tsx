@@ -39,7 +39,7 @@ export default function TimelineItem({ item }: Props) {
 
         border-4
 
-        border-cyan-400
+        border-emerald-400
 
         bg-slate-950
 
@@ -49,7 +49,7 @@ export default function TimelineItem({ item }: Props) {
 
         group-hover:scale-125
 
-        group-hover:shadow-[0_0_25px_rgba(0,168,255,.6)]
+        group-hover:shadow-[0_0_25px_rgba(5,150,105,.6)]
       "
       />
 
@@ -63,7 +63,7 @@ export default function TimelineItem({ item }: Props) {
 
         border
 
-        border-cyan-500/20
+        border-emerald-500/20
 
         bg-white/5
 
@@ -75,12 +75,12 @@ export default function TimelineItem({ item }: Props) {
 
         duration-300
 
-        group-hover:border-cyan-400
+        group-hover:border-emerald-400
 
         group-hover:bg-white/10
       "
       >
-        <p className="text-sm font-semibold text-cyan-300">
+        <p className="text-sm font-semibold text-emerald-300">
           {item.date}
         </p>
 

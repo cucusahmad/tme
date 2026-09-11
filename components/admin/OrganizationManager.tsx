@@ -5,7 +5,7 @@ import { saveOrganization, saveSupervisors, type OrganizationActionState } from 
 
 type Organization = { id: string; name: string; description: string | null; memberCount: number; supervisorCount: number; members: { id: string; name: string; email: string; supervisor: boolean }[] };
 const initialState: OrganizationActionState = { success: false, message: "" };
-const fieldClass = "mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 font-normal text-slate-900 focus:border-cyan-500";
+const fieldClass = "mt-1 block w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 font-normal text-slate-900 focus:border-emerald-500";
 
 function OrganizationForm({ organization }: { organization?: Organization }) {
   const [state, action, pending] = useActionState(saveOrganization, initialState);
@@ -32,7 +32,7 @@ function SupervisorForm({ organization }: { organization: Organization }) {
         <input type="checkbox" name="supervisorIds" value={member.id} defaultChecked={member.supervisor} className="h-4 w-4" />
         <span>{member.name} <span className="text-xs text-slate-500">({member.email})</span></span>
       </label>)}</div>
-      <button disabled={!organization.members.length} className="rounded-lg bg-cyan-50 px-3 py-2 text-sm font-bold text-cyan-700 hover:bg-cyan-100 disabled:opacity-60">{pending ? "Menyimpan..." : "Simpan supervisor"}</button>
+      <button disabled={!organization.members.length} className="rounded-lg bg-emerald-50 px-3 py-2 text-sm font-bold text-emerald-700 hover:bg-emerald-100 disabled:opacity-60">{pending ? "Menyimpan..." : "Simpan supervisor"}</button>
     </fieldset>
     <p role="status" className={`text-sm ${state.success ? "text-emerald-700" : "text-red-700"}`}>{state.message}</p>
   </form>;

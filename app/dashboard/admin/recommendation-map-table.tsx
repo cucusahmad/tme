@@ -39,7 +39,7 @@ export default function RecommendationMapTable({ rows }: { rows: RecommendationM
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Cari nama pengguna..."
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-10 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10"
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-10 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10"
           />
           {query && (
             <button type="button" onClick={() => setQuery("")} aria-label="Hapus pencarian" className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700">
@@ -69,7 +69,7 @@ export default function RecommendationMapTable({ rows }: { rows: RecommendationM
                       {recommendation ? (
                         <div className="min-w-[190px]">
                           <p className="font-semibold leading-5 text-slate-800">{recommendation.unitName}</p>
-                          <span className="mt-2 inline-flex rounded-full bg-cyan-50 px-2.5 py-1 text-xs font-black text-cyan-700">
+                          <span className="mt-2 inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-black text-emerald-700">
                             {recommendation.percentage.toFixed(1)}%
                           </span>
                         </div>
@@ -78,7 +78,7 @@ export default function RecommendationMapTable({ rows }: { rows: RecommendationM
                   );
                 })}
                 <td className="px-5 py-4">
-                  <Link href={`/dashboard/admin/users/${row.userId}/assessment`} className="inline-flex items-center gap-1.5 font-bold text-cyan-700 hover:text-cyan-900">
+                  <Link href={`/dashboard/admin/users/${row.userId}/assessment`} className="inline-flex items-center gap-1.5 font-bold text-emerald-700 hover:text-emerald-900">
                     Detail <ArrowRight size={14} />
                   </Link>
                 </td>

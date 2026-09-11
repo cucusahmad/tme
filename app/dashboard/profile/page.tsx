@@ -17,7 +17,7 @@ export default function ProfilePage() {
 
       </div>
 
-      <Link href="/dashboard/organization" className="inline-block rounded-xl bg-cyan-50 px-4 py-3 text-sm font-semibold text-cyan-800 hover:bg-cyan-100">
+      <Link href="/dashboard/organization" className="inline-block rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 hover:bg-emerald-100">
         Pengaturan Organisasi &amp; Mentor →
       </Link>
 

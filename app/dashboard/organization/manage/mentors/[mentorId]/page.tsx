@@ -18,8 +18,8 @@ export default async function MentorMembersPage({ params }: { params: Promise<{ 
   });
   if (!mentor) notFound();
   return <div className="space-y-6">
-    <Link href="/dashboard/organization/manage#mentors" className="text-sm font-semibold text-cyan-700 hover:underline">← Kembali ke daftar mentor</Link>
-    <div className="rounded-3xl bg-white p-6 shadow-sm"><p className="text-sm font-semibold text-cyan-700">Mentor · {supervisor.organization?.name}</p><h1 className="mt-2 text-3xl font-bold text-slate-900">{mentor.biodata?.nama_lengkap || mentor.email}</h1><p className="mt-2 text-slate-500">{mentor.email}</p><p className="mt-4 font-semibold text-slate-700">{mentor.mentees.length} anggota bimbingan</p></div>
+    <Link href="/dashboard/organization/manage#mentors" className="text-sm font-semibold text-emerald-700 hover:underline">← Kembali ke daftar mentor</Link>
+    <div className="rounded-3xl bg-white p-6 shadow-sm"><p className="text-sm font-semibold text-emerald-700">Mentor · {supervisor.organization?.name}</p><h1 className="mt-2 text-3xl font-bold text-slate-900">{mentor.biodata?.nama_lengkap || mentor.email}</h1><p className="mt-2 text-slate-500">{mentor.email}</p><p className="mt-4 font-semibold text-slate-700">{mentor.mentees.length} anggota bimbingan</p></div>
     <h2 className="text-xl font-bold text-slate-900">Anggota Bimbingan</h2><MemberTable members={mentor.mentees} />
   </div>;
 }

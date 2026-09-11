@@ -26,9 +26,9 @@ export default function ProgressBar({
 
         </div>
 
-        <div className="rounded-xl bg-cyan-50 px-4 py-2">
+        <div className="rounded-xl bg-emerald-50 px-4 py-2">
 
-          <span className="text-lg font-bold text-cyan-700">
+          <span className="text-lg font-bold text-emerald-700">
             {current} / {total}
           </span>
 
@@ -41,7 +41,7 @@ export default function ProgressBar({
       <div className="h-3 w-full overflow-hidden rounded-full bg-slate-200">
 
         <div
-          className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 transition-all duration-500"
+          className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 transition-all duration-500"
           style={{
             width: `${percentage}%`,
           }}
@@ -55,7 +55,7 @@ export default function ProgressBar({
           Progress Assessment
         </span>
 
-        <span className="font-semibold text-cyan-700">
+        <span className="font-semibold text-emerald-700">
           {percentage}%
         </span>
 

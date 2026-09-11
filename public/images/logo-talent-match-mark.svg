@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Talent Match</title>
+  <rect width="64" height="64" rx="18" fill="#064e3b"/>
+  <rect x=".5" y=".5" width="63" height="63" rx="17.5" fill="none" stroke="#a7d9bd" stroke-opacity=".3"/>
+  <path d="M13 27c7 0 13 3 19 8v19c-6-5-12-8-19-8V27Z" fill="#faf7ee"/>
+  <path d="M51 27c-7 0-13 3-19 8v19c6-5 12-8 19-8V27Z" fill="#a7d9bd"/>
+  <path d="M32 33V14m-7 7 7-7 7 7" fill="none" stroke="#fcd34d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

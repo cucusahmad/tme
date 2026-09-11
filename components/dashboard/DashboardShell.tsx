@@ -23,8 +23,8 @@ export default function DashboardShell({
   }
 
   return (
-    <div className="min-h-screen bg-[#f3f6f9]">
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_78%_0%,rgba(14,116,144,0.08),transparent_28%),radial-gradient(circle_at_35%_85%,rgba(245,158,11,0.06),transparent_25%)]" />
+    <div className="min-h-screen bg-[#f7f8f4]">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_78%_0%,rgba(4,120,87,0.08),transparent_28%),radial-gradient(circle_at_35%_85%,rgba(245,158,11,0.06),transparent_25%)]" />
 
       {/* Sidebar Desktop */}
 

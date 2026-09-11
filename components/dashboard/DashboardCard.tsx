@@ -14,7 +14,7 @@ export default function DashboardCard({
 
       border
 
-      border-cyan-500/20
+      border-emerald-500/20
 
       bg-white/5
 
@@ -24,7 +24,7 @@ export default function DashboardCard({
 
       transition
 
-      hover:border-cyan-400
+      hover:border-emerald-400
     "
     >
       {children}

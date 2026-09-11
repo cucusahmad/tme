@@ -24,7 +24,7 @@ export default async function ManageOrganizationPage() {
   const date = new Intl.DateTimeFormat("id-ID", { dateStyle: "medium", timeZone: "Asia/Jakarta" });
   return <div className="space-y-8">
     <div><h1 className="text-3xl font-bold text-slate-900">Kelola Organisasi</h1><p className="mt-2 text-slate-500">{supervisor.organization?.name} · Ruang supervisor</p></div>
-    <nav aria-label="Bagian organisasi" className="flex flex-wrap gap-3 text-sm font-semibold text-cyan-800"><a href="#requests" className="rounded-xl bg-white px-4 py-3 shadow-sm">Permintaan ({requests.length})</a><a href="#members" className="rounded-xl bg-white px-4 py-3 shadow-sm">Anggota ({members.length})</a><a href="#mentors" className="rounded-xl bg-white px-4 py-3 shadow-sm">Mentor ({mentors.length})</a></nav>
+    <nav aria-label="Bagian organisasi" className="flex flex-wrap gap-3 text-sm font-semibold text-emerald-800"><a href="#requests" className="rounded-xl bg-white px-4 py-3 shadow-sm">Permintaan ({requests.length})</a><a href="#members" className="rounded-xl bg-white px-4 py-3 shadow-sm">Anggota ({members.length})</a><a href="#mentors" className="rounded-xl bg-white px-4 py-3 shadow-sm">Mentor ({mentors.length})</a></nav>
     <section id="requests" className="scroll-mt-24 space-y-4"><h2 className="text-xl font-bold text-slate-900">Permintaan Bergabung</h2>
       {!requests.length && <p className="rounded-2xl bg-white p-6 text-slate-500">Tidak ada permintaan yang menunggu persetujuan.</p>}
       {requests.map(request => <div key={request.request_id.toString()} className="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 sm:flex-row sm:items-start">
@@ -37,8 +37,8 @@ export default async function ManageOrganizationPage() {
     </section>
     <section id="members" className="scroll-mt-24 space-y-4"><h2 className="text-xl font-bold text-slate-900">Anggota Organisasi</h2><MemberTable members={members} /></section>
     <section id="mentors" className="scroll-mt-24 space-y-4"><div><h2 className="text-xl font-bold text-slate-900">Daftar Mentor</h2><p className="mt-1 text-sm text-slate-500">Anggota yang telah dipilih sebagai mentor. Klik mentor untuk melihat anggota bimbingannya.</p></div>
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{mentors.map(mentor => <Link key={mentor.user_id.toString()} href={`/dashboard/organization/manage/mentors/${mentor.user_id}`} className="rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-cyan-400 hover:shadow-md">
-        <h3 className="font-bold text-slate-900">{mentor.biodata?.nama_lengkap || mentor.email}</h3><p className="mt-1 break-all text-sm text-slate-500">{mentor.email}{!mentor.is_active ? " · Nonaktif" : ""}</p><p className="mt-4 font-semibold text-cyan-800">{mentor._count.mentees} anggota bimbingan →</p>
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{mentors.map(mentor => <Link key={mentor.user_id.toString()} href={`/dashboard/organization/manage/mentors/${mentor.user_id}`} className="rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-emerald-400 hover:shadow-md">
+        <h3 className="font-bold text-slate-900">{mentor.biodata?.nama_lengkap || mentor.email}</h3><p className="mt-1 break-all text-sm text-slate-500">{mentor.email}{!mentor.is_active ? " · Nonaktif" : ""}</p><p className="mt-4 font-semibold text-emerald-800">{mentor._count.mentees} anggota bimbingan →</p>
       </Link>)}</div>
       {!mentors.length && <p className="rounded-2xl bg-white p-6 text-slate-500">Belum ada mentor yang dipilih oleh anggota organisasi.</p>}
     </section>

@@ -10,7 +10,7 @@ export default function RecommendationCard({
 
   return (
 
-    <div className="rounded-3xl bg-gradient-to-r from-cyan-600 to-blue-700 p-10 text-white shadow-xl">
+    <div className="rounded-3xl bg-gradient-to-r from-emerald-600 to-emerald-700 p-10 text-white shadow-xl">
 
       <div className="mb-6 flex items-center gap-4">
 

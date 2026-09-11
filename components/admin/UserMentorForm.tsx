@@ -23,7 +23,7 @@ export default function UserMentorForm({ userId, userName, organizationId, mento
   const matches = options.filter(item => `${item.name} ${item.email}`.toLocaleLowerCase("id").includes(query.trim().toLocaleLowerCase("id")));
 
   return <div>
-    <button type="button" onClick={() => { setQuery(""); dialog.current?.showModal(); }} className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg bg-cyan-50 px-3 py-2 text-xs font-bold text-cyan-700 hover:bg-cyan-100">
+    <button type="button" onClick={() => { setQuery(""); dialog.current?.showModal(); }} className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-700 hover:bg-emerald-100">
       <Settings size={14} />Setting Mentor
     </button>
     <dialog ref={dialog} aria-labelledby={titleId} onCancel={event => { if (pending) event.preventDefault(); }} className="fixed inset-0 m-auto max-h-[85vh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-2xl border border-slate-200 bg-white p-6 text-slate-900 shadow-xl backdrop:bg-slate-900/50">
@@ -38,7 +38,7 @@ export default function UserMentorForm({ userId, userName, organizationId, mento
           <ul className="max-h-80 divide-y divide-slate-100 overflow-y-auto">
             {matches.map(item => <li key={item.id} className="flex items-center justify-between gap-3 py-3">
               <div className="min-w-0"><p className="break-words text-sm font-semibold">{item.name}</p><p className="break-all text-xs text-slate-500">{item.email}</p></div>
-              <button type="submit" name="mentorId" value={item.id} disabled={item.id === mentorId} className="shrink-0 rounded-lg bg-cyan-50 px-3 py-2 text-xs font-bold text-cyan-700 hover:bg-cyan-100 disabled:opacity-50">{item.id === mentorId ? "Mentor saat ini" : "Pilih Mentor"}</button>
+              <button type="submit" name="mentorId" value={item.id} disabled={item.id === mentorId} className="shrink-0 rounded-lg bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-700 hover:bg-emerald-100 disabled:opacity-50">{item.id === mentorId ? "Mentor saat ini" : "Pilih Mentor"}</button>
             </li>)}
           </ul>
           {!matches.length && <p className="text-sm text-slate-500">{options.length ? "Nama tidak ditemukan dalam organisasi ini." : "Belum ada anggota lain yang dapat dipilih sebagai mentor."}</p>}

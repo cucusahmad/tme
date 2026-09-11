@@ -86,7 +86,7 @@ export default function StatusCard() {
             Progress
           </span>
 
-          <span className="text-cyan-400">
+          <span className="text-emerald-400">
             {percent}%
           </span>
 
@@ -95,7 +95,7 @@ export default function StatusCard() {
         <div className="h-3 overflow-hidden rounded-full bg-white/10">
 
           <div
-            className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-600"
+            className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600"
             style={{
               width: `${percent}%`,
             }}

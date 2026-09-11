@@ -12,7 +12,7 @@ export default function ProgressCard() {
           Registration Progress
         </h2>
 
-        <span className="text-cyan-400 font-bold">
+        <span className="text-emerald-400 font-bold">
           {progress}%
         </span>
 
@@ -24,7 +24,7 @@ export default function ProgressCard() {
           style={{
             width: `${progress}%`,
           }}
-          className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500"
+          className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-500"
         />
 
       </div>

@@ -6,8 +6,8 @@ const TARGET_DATE = new Date("2026-07-14T08:00:00+07:00").getTime();
 
 function CountdownBox({ value, label }: { value: string; label: string }) {
   return (
-    <div className="flex min-w-[95px] flex-col items-center justify-center rounded-2xl border border-cyan-500/20 bg-black/25 px-6 py-5 shadow-[0_0_25px_rgba(0,168,255,.08)] backdrop-blur-xl">
-      <h2 className="text-4xl font-bold text-cyan-300">{value}</h2>
+    <div className="flex min-w-[95px] flex-col items-center justify-center rounded-2xl border border-emerald-500/20 bg-black/25 px-6 py-5 shadow-[0_0_25px_rgba(5,150,105,.08)] backdrop-blur-xl">
+      <h2 className="text-4xl font-bold text-emerald-300">{value}</h2>
       <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-400">{label}</p>
     </div>
   );
@@ -63,7 +63,7 @@ export default function Countdown() {
   return (
   <div className="w-full text-center">
 
-    <p className="mb-6 text-sm uppercase tracking-[0.35em] text-cyan-300">
+    <p className="mb-6 text-sm uppercase tracking-[0.35em] text-emerald-300">
       Competition Starts In
     </p>
 

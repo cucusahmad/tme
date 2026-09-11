@@ -23,7 +23,7 @@ export default function GenerateCard({
 
       {/* Hero */}
 
-      <div className="overflow-hidden rounded-3xl bg-gradient-to-r from-cyan-600 via-sky-600 to-blue-700 p-12 text-white shadow-xl">
+      <div className="overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-600 via-emerald-600 to-emerald-700 p-12 text-white shadow-xl">
 
         <div className="max-w-3xl">
 
@@ -43,7 +43,7 @@ export default function GenerateCard({
 
           </h1>
 
-          <p className="mt-6 text-lg text-cyan-100">
+          <p className="mt-6 text-lg text-emerald-100">
 
             AI akan menganalisis seluruh hasil assessment,
             kemudian menghasilkan rekomendasi pengembangan
@@ -56,7 +56,7 @@ export default function GenerateCard({
           <button
             onClick={onGenerate}
             disabled={loading}
-            className="mt-10 inline-flex items-center gap-3 rounded-xl bg-white px-8 py-4 font-bold text-cyan-700 transition hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-10 inline-flex items-center gap-3 rounded-xl bg-white px-8 py-4 font-bold text-emerald-700 transition hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <Sparkles size={20} />
 
@@ -80,7 +80,7 @@ export default function GenerateCard({
         <div className="rounded-2xl bg-white p-6 shadow">
 
           <Brain
-            className="mb-4 text-cyan-600"
+            className="mb-4 text-emerald-600"
             size={42}
           />
 
@@ -102,7 +102,7 @@ export default function GenerateCard({
         <div className="rounded-2xl bg-white p-6 shadow">
 
           <Target
-            className="mb-4 text-cyan-600"
+            className="mb-4 text-emerald-600"
             size={42}
           />
 
@@ -124,7 +124,7 @@ export default function GenerateCard({
         <div className="rounded-2xl bg-white p-6 shadow">
 
           <BookOpen
-            className="mb-4 text-cyan-600"
+            className="mb-4 text-emerald-600"
             size={42}
           />
 
@@ -146,7 +146,7 @@ export default function GenerateCard({
         <div className="rounded-2xl bg-white p-6 shadow">
 
           <GraduationCap
-            className="mb-4 text-cyan-600"
+            className="mb-4 text-emerald-600"
             size={42}
           />
 
@@ -194,7 +194,7 @@ export default function GenerateCard({
               className="flex items-center gap-4 rounded-xl border border-slate-200 p-5"
             >
 
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-cyan-100 font-bold text-cyan-700">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 font-bold text-emerald-700">
 
                 {index + 1}
 

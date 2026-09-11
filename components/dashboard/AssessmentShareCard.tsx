@@ -46,10 +46,10 @@ export default function AssessmentShareCard() {
   }
 
   return (
-    <section className="rounded-3xl border border-blue-100 bg-gradient-to-br from-white to-blue-50 p-6 shadow-sm sm:p-7" aria-labelledby="share-assessment-title">
+    <section className="rounded-3xl border border-emerald-100 bg-gradient-to-br from-white to-emerald-50 p-6 shadow-sm sm:p-7" aria-labelledby="share-assessment-title">
       <div className="grid items-center gap-6 md:grid-cols-[1fr_auto]">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1.5 text-xs font-semibold text-blue-700">
+          <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1.5 text-xs font-semibold text-emerald-700">
             <QrCode size={15} /> Penilaian 360°
           </span>
           <h2 id="share-assessment-title" className="mt-4 text-xl font-bold text-slate-900">Minta orang lain menilai Anda</h2>
@@ -63,7 +63,7 @@ export default function AssessmentShareCard() {
                 <button type="button" onClick={copyLink} className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700">
                   {copied ? <Check size={17} /> : <Copy size={17} />} {copied ? "Tersalin" : "Salin tautan"}
                 </button>
-                <button type="button" onClick={shareLink} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-blue-300 hover:text-blue-700">
+                <button type="button" onClick={shareLink} className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-emerald-300 hover:text-emerald-700">
                   <Share2 size={17} /> Bagikan
                 </button>
               </div>

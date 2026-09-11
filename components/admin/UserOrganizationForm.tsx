@@ -17,7 +17,7 @@ export default function UserOrganizationForm({ userId, organizationId, organizat
         <option value="">Belum ada organisasi</option>
         {organizations.map(item => <option key={item.id} value={item.id} disabled={!item.active}>{item.name}{!item.active ? " (Nonaktif)" : ""}</option>)}
       </select></label>
-      <button className="rounded-lg bg-cyan-50 px-3 py-2 text-xs font-bold text-cyan-700 hover:bg-cyan-100">{pending ? "Menyimpan..." : "Simpan organisasi"}</button>
+      <button className="rounded-lg bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-700 hover:bg-emerald-100">{pending ? "Menyimpan..." : "Simpan organisasi"}</button>
     </fieldset>
     <p role="status" className={`max-w-64 text-xs ${state.success ? "text-emerald-700" : "text-red-700"}`}>{state.message}</p>
   </form>;

@@ -55,7 +55,7 @@ export default function RecommendationContent({ recommendation }: Recommendation
             onClick={() => setTab(item.key)}
             className={`rounded-full px-5 py-3 transition text-sm font-medium whitespace-nowrap shadow-sm ${
               tab === item.key
-                ? "bg-cyan-600 text-white"
+                ? "bg-emerald-600 text-white"
                 : "bg-white text-slate-600 hover:bg-slate-50"
             }`}
           >
@@ -74,7 +74,7 @@ export default function RecommendationContent({ recommendation }: Recommendation
             {recommendation.top_5_development_priorities?.map((item, index) => (
               <div key={index} className="p-5 bg-slate-50 rounded-2xl border border-slate-100">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-cyan-100 text-sm font-bold text-cyan-700">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-700">
                     {index + 1}
                   </span>
                   <h3 className="text-lg font-semibold text-slate-800">{item.title}</h3>
@@ -90,7 +90,7 @@ export default function RecommendationContent({ recommendation }: Recommendation
         {tab === "development" && (
           <div className="space-y-4">
             <h2 className="text-xl font-bold text-slate-800">Development Recommendation</h2>
-            <p className="p-4 bg-cyan-50 text-cyan-900 rounded-2xl text-sm leading-relaxed">
+            <p className="p-4 bg-emerald-50 text-emerald-900 rounded-2xl text-sm leading-relaxed">
               {recommendation.development_recommendation?.summary}
             </p>
             <div className="mt-4">
@@ -110,7 +110,7 @@ export default function RecommendationContent({ recommendation }: Recommendation
             <h2 className="text-xl font-bold text-slate-800 mb-4">Individual Career Roadmap</h2>
             {recommendation.individual_career_roadmap?.map((item, index) => (
               <div key={index} className="p-5 bg-slate-50 rounded-2xl border border-slate-100 flex gap-4">
-                <div className="text-center bg-cyan-600 text-white px-4 py-2 rounded-xl h-fit">
+                <div className="text-center bg-emerald-600 text-white px-4 py-2 rounded-xl h-fit">
                   <span className="block text-xs uppercase tracking-wider">Tahun</span>
                   <span className="text-xl font-bold">{item.year}</span>
                 </div>
@@ -194,8 +194,8 @@ export default function RecommendationContent({ recommendation }: Recommendation
             <span
               className={`rounded-full px-3 py-1 text-sm font-semibold ${
                 item.category === "University"
-                  ? "bg-blue-100 text-blue-700"
-                  : "bg-cyan-100 text-cyan-700"
+                  ? "bg-amber-100 text-amber-800"
+                  : "bg-emerald-100 text-emerald-700"
               }`}
             >
               {item.category}
@@ -272,7 +272,7 @@ export default function RecommendationContent({ recommendation }: Recommendation
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex rounded-xl bg-cyan-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan-700"
+                  className="inline-flex rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700"
                 >
                   Visit Platform
                 </a>
@@ -309,7 +309,7 @@ export default function RecommendationContent({ recommendation }: Recommendation
         {tab === "commitment" && (
           <div className="space-y-4">
             <h2 className="text-xl font-bold text-slate-800 mb-2">Personal Commitment</h2>
-            <div className="p-6 bg-gradient-to-r from-cyan-50 to-emerald-50 rounded-2xl border border-cyan-100/50">
+            <div className="p-6 bg-gradient-to-r from-emerald-50 to-emerald-50 rounded-2xl border border-emerald-100/50">
               <h3 className="text-lg font-semibold text-slate-800 mb-2">
                 🤝 {recommendation.personal_commitment?.title}
               </h3>

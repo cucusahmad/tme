@@ -11,13 +11,13 @@ export default function Competition() {
 
         <div className="mb-20 text-center">
 
-          <span className="rounded-full border border-cyan-400/20 bg-cyan-500/10 px-5 py-2 text-sm text-cyan-300">
+          <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-5 py-2 text-sm text-emerald-300">
             COMPETITION CATEGORIES
           </span>
 
           <h2 className="mt-8 text-5xl font-black text-white">
             Choose Your
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-400 to-purple-500 bg-clip-text text-transparent">
               {" "}
               Challenge
             </span>

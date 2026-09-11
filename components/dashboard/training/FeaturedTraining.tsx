@@ -73,7 +73,7 @@ export default function FeaturedTraining({
                 className="object-cover"
               />
 
-              <span className="absolute left-5 top-5 rounded-full bg-cyan-600 px-4 py-2 text-sm font-semibold text-white">
+              <span className="absolute left-5 top-5 rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white">
 
                 {training.category}
 
@@ -134,13 +134,13 @@ export default function FeaturedTraining({
 
               <div className="flex items-center justify-between">
 
-                <span className="rounded-full bg-cyan-100 px-4 py-2 text-sm font-semibold text-cyan-700">
+                <span className="rounded-full bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-700">
 
                   {training.level}
 
                 </span>
 
-                <button className="inline-flex items-center gap-2 rounded-xl bg-cyan-600 px-5 py-3 font-semibold text-white transition hover:bg-cyan-700">
+                <button className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 font-semibold text-white transition hover:bg-emerald-700">
 
                   Lihat Detail
 

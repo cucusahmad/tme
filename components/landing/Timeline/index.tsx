@@ -15,13 +15,13 @@ export default function Timeline() {
 
         <div className="text-center">
 
-          <span className="rounded-full border border-cyan-500/20 bg-cyan-500/10 px-5 py-2 text-sm text-cyan-300">
+          <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-5 py-2 text-sm text-emerald-300">
             EVENT TIMELINE
           </span>
 
           <h2 className="mt-8 text-5xl font-black text-white">
             Journey to{" "}
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-400 to-purple-500 bg-clip-text text-transparent">
               IRDO 2026
             </span>
           </h2>
@@ -52,9 +52,9 @@ export default function Timeline() {
 
             bg-gradient-to-r
 
-            from-cyan-500
+            from-emerald-500
 
-            via-blue-500
+            via-emerald-500
 
             to-purple-600
           "

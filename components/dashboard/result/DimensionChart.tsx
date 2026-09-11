@@ -61,10 +61,10 @@ export default function DimensionChart({ dimensions = [] }: Props) {
       {
         label: "Pemetaan Talenta",
         data: dataValues,
-        backgroundColor: "rgba(6,182,212,0.20)",
-        borderColor: "#06b6d4",
+        backgroundColor: "rgba(5,150,105,0.20)",
+        borderColor: "#059669",
         borderWidth: 3,
-        pointBackgroundColor: "#0891b2",
+        pointBackgroundColor: "#047857",
         pointBorderColor: "#ffffff",
         pointRadius: 5,
         pointHoverRadius: 7,

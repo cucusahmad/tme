@@ -45,7 +45,7 @@ export default function TrainingCard({
           className="object-cover"
         />
 
-        <div className="absolute left-4 top-4 rounded-full bg-cyan-600 px-3 py-1 text-xs font-semibold text-white">
+        <div className="absolute left-4 top-4 rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white">
 
           {training.category}
 
@@ -112,7 +112,7 @@ export default function TrainingCard({
 
         </div>
 
-        <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-600 py-3 font-semibold text-white transition hover:bg-cyan-700">
+        <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3 font-semibold text-white transition hover:bg-emerald-700">
 
           Lihat Detail
 

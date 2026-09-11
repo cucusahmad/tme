@@ -188,7 +188,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           />
 
@@ -220,7 +220,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           >
 
@@ -266,7 +266,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           />
 
@@ -299,7 +299,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           />
 
@@ -331,7 +331,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           />
 
@@ -364,7 +364,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           />
 
@@ -409,7 +409,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
         />
 
@@ -441,7 +441,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           />
 
@@ -471,7 +471,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           />
 
@@ -525,7 +525,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           >
 
@@ -574,7 +574,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           />
 
@@ -626,7 +626,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           >
 
@@ -687,7 +687,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           >
 
@@ -736,7 +736,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           />
 
@@ -768,7 +768,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           />
 
@@ -800,7 +800,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           />
 
@@ -836,7 +836,7 @@ text-slate-900
 placeholder:text-slate-400
 outline-none
 transition
-focus:border-cyan-500
+focus:border-emerald-500
 "
           />
 
@@ -863,7 +863,7 @@ focus:border-cyan-500
         <button
           type="submit"
           disabled={saving}
-          className="rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-3 font-semibold text-white transition hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+          className="rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-8 py-3 font-semibold text-white transition hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
         >
           {saving
             ? "Menyimpan..."

@@ -55,27 +55,27 @@ export default function LoginCard() {
   }
 
   return (
-    <div className="relative z-20 mx-auto grid w-full max-w-5xl overflow-hidden rounded-[2rem] border border-white/15 bg-white shadow-2xl shadow-slate-950/30 lg:grid-cols-[0.9fr_1.1fr]">
-      <section className="relative hidden overflow-hidden bg-slate-950 p-10 text-white lg:flex lg:flex-col lg:justify-between" aria-label="Tentang Talent Match Ecosystem">
-        <div className="absolute -left-24 -top-20 h-64 w-64 rounded-full bg-blue-600/30 blur-3xl" />
-        <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-cyan-500/20 blur-3xl" />
+    <div className="relative z-20 mx-auto grid w-full max-w-5xl overflow-hidden rounded-[2rem] border border-emerald-100 bg-white shadow-[0_24px_70px_-25px_rgba(6,78,59,.22)] lg:grid-cols-[0.9fr_1.1fr]">
+      <section className="relative hidden overflow-hidden bg-emerald-950 p-10 text-white lg:flex lg:flex-col lg:justify-between" aria-label="Tentang Talent Match Ecosystem">
+        <div className="absolute -left-24 -top-20 h-64 w-64 rounded-full bg-emerald-600/25 blur-3xl" />
+        <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-amber-300/15 blur-3xl" />
 
         <div className="relative">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-semibold text-blue-100">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-semibold text-emerald-100">
             <Sparkles size={14} /> Talent Match Ecosystem
           </span>
           <h2 className="mt-7 text-3xl font-bold leading-tight tracking-tight">
             Temukan potensi terbaik untuk masa depan karier Anda.
           </h2>
-          <p className="mt-4 text-sm leading-7 text-slate-300">
+          <p className="mt-4 text-sm leading-7 text-emerald-100/80">
             Kenali Potensi, Temukan Profesi yang Sesuai.
           </p>
         </div>
 
-        <div className="relative space-y-4 text-sm text-slate-300">
+        <div className="relative space-y-4 text-sm text-emerald-100/80">
           {["Assessment berbasis kompetensi", "Rekomendasi karier personal", "Roadmap pengembangan terarah"].map((item) => (
             <div key={item} className="flex items-center gap-3">
-              <CheckCircle2 size={18} className="shrink-0 text-cyan-400" />
+              <CheckCircle2 size={18} className="shrink-0 text-amber-300" />
               <span>{item}</span>
             </div>
           ))}
@@ -86,7 +86,7 @@ export default function LoginCard() {
         <AuthLogo />
 
         <div className="mt-8 text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-950">Selamat datang kembali</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-emerald-950">Selamat datang kembali</h1>
           <p className="mt-2 text-sm leading-6 text-slate-500">Masuk untuk melanjutkan perjalanan pengembangan Anda.</p>
         </div>
 
@@ -111,17 +111,17 @@ export default function LoginCard() {
             autoComplete="current-password"
           />
 
-          <div className="flex items-center justify-between gap-4 text-sm">
+          <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
             <span className="inline-flex items-center gap-1.5 text-slate-500">
               <ShieldCheck size={15} className="text-emerald-600" /> Data Anda terlindungi
             </span>
-            <Link href="/" className="font-semibold text-blue-700 transition hover:text-blue-600">Kembali</Link>
+            <Link href="/" className="font-semibold text-emerald-700 transition hover:text-emerald-900">Kembali</Link>
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3.5 font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 disabled:cursor-not-allowed disabled:opacity-60"
+            className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-amber-300 px-5 py-3.5 font-bold text-[#022c22] shadow-[0_14px_40px_rgba(251,191,36,.18)] transition hover:bg-amber-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-200 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSubmitting ? (
               <><LockKeyhole size={18} className="animate-pulse" /> Memproses...</>
@@ -133,7 +133,7 @@ export default function LoginCard() {
 
         <p className="mt-7 text-center text-sm text-slate-500">
           Belum memiliki akun?
-          <Link href="/auth/register" className="ml-1.5 font-semibold text-blue-700 transition hover:text-blue-600">Daftar sekarang</Link>
+          <Link href="/auth/register" className="ml-1.5 font-semibold text-emerald-700 transition hover:text-emerald-900">Daftar sekarang</Link>
         </p>
       </section>
     </div>

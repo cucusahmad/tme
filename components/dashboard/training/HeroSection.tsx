@@ -15,7 +15,7 @@ export default function HeroSection({
   onSearch,
 }: Props) {
   return (
-    <div className="overflow-hidden rounded-3xl bg-gradient-to-r from-cyan-600 via-sky-600 to-blue-700 p-10 text-white shadow-xl">
+    <div className="overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-600 via-emerald-600 to-emerald-700 p-10 text-white shadow-xl">
 
       <div className="max-w-3xl">
 
@@ -38,7 +38,7 @@ export default function HeroSection({
 
         </h1>
 
-        <p className="mt-5 text-lg text-cyan-100">
+        <p className="mt-5 text-lg text-emerald-100">
 
           Tingkatkan kompetensi Anda melalui
           pelatihan, workshop, sertifikasi,

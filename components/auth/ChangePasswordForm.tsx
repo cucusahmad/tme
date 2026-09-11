@@ -44,16 +44,16 @@ export default function ChangePasswordForm({ admin = false }: { admin?: boolean 
     }
   }
 
-  const accent = admin ? "focus:border-cyan-500 focus:ring-cyan-500/10" : "focus:border-amber-500 focus:ring-amber-500/10";
+  const accent = admin ? "focus:border-emerald-500 focus:ring-emerald-500/10" : "focus:border-amber-500 focus:ring-amber-500/10";
   const button = admin
-    ? "from-cyan-500 to-blue-600 hover:shadow-cyan-500/20"
-    : "from-amber-400 to-amber-500 text-[#07182d] hover:shadow-amber-500/20";
+    ? "from-emerald-500 to-emerald-600 hover:shadow-emerald-500/20"
+    : "from-amber-400 to-amber-500 text-[#022c22] hover:shadow-amber-500/20";
 
   return (
     <div className="grid gap-6 xl:grid-cols-[1fr_20rem]">
       <form onSubmit={handleSubmit(onSubmit)} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         <div className="mb-7 flex items-start gap-4 border-b border-slate-100 pb-6">
-          <div className={`rounded-2xl p-3 ${admin ? "bg-cyan-50 text-cyan-700" : "bg-amber-50 text-amber-700"}`}>
+          <div className={`rounded-2xl p-3 ${admin ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
             <KeyRound size={24} />
           </div>
           <div>
@@ -102,7 +102,7 @@ export default function ChangePasswordForm({ admin = false }: { admin?: boolean 
       </form>
 
       <aside className="h-fit rounded-3xl bg-slate-900 p-6 text-white shadow-lg">
-        <ShieldCheck className={admin ? "text-cyan-300" : "text-amber-300"} size={30} />
+        <ShieldCheck className={admin ? "text-emerald-300" : "text-amber-300"} size={30} />
         <h3 className="mt-4 text-lg font-bold">Jaga keamanan akun</h3>
         <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-300">
           <li>Gunakan minimal 6 karakter.</li>

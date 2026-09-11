@@ -22,7 +22,7 @@ export default function ActivityCard() {
             key={activity}
             className="flex items-center gap-3"
           >
-            <div className="h-3 w-3 rounded-full bg-cyan-400" />
+            <div className="h-3 w-3 rounded-full bg-emerald-400" />
 
             <p className="text-slate-300">
               {activity}

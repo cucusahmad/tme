@@ -43,7 +43,7 @@ const Icon = icons[item.icon as keyof typeof icons];
 
       border
 
-      border-cyan-500/20
+      border-emerald-500/20
 
       bg-white/5
 
@@ -53,9 +53,9 @@ const Icon = icons[item.icon as keyof typeof icons];
 
       transition
 
-      hover:border-cyan-400
+      hover:border-emerald-400
 
-      hover:shadow-[0_0_35px_rgba(0,168,255,.15)]
+      hover:shadow-[0_0_35px_rgba(5,150,105,.15)]
       "
     >
       <div
@@ -82,7 +82,7 @@ const Icon = icons[item.icon as keyof typeof icons];
       <Icon size={42} className="text-white" />
       </div>
 
-      <span className="text-sm text-cyan-300">
+      <span className="text-sm text-emerald-300">
         {item.level}
       </span>
 
@@ -100,7 +100,7 @@ const Icon = icons[item.icon as keyof typeof icons];
             Registration Fee
           </p>
 
-          <h4 className="mt-1 text-xl font-bold text-cyan-300">
+          <h4 className="mt-1 text-xl font-bold text-emerald-300">
             {item.fee}
           </h4>
         </div>
@@ -122,7 +122,7 @@ const Icon = icons[item.icon as keyof typeof icons];
 
           bg-gradient-to-r
 
-          from-cyan-500
+          from-emerald-500
 
           to-purple-600
 

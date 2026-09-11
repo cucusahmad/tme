@@ -4,9 +4,9 @@ export default async function PublicAssessmentPage({ params }: PageProps<"/nilai
   const { token } = await params;
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 px-4 py-10 sm:py-16">
+    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 px-4 py-10 sm:py-16">
       <div className="mx-auto mb-8 max-w-4xl text-center">
-        <p className="text-lg font-bold tracking-tight text-blue-700">Talent Match Ecosystem</p>
+        <p className="text-lg font-bold tracking-tight text-emerald-700">Talent Match Ecosystem</p>
         <p className="mt-1 text-xs font-medium uppercase tracking-[0.2em] text-slate-400">Kenali Potensi, Temukan Profesi yang Sesuai.</p>
       </div>
       <PublicAssessment token={token} />

@@ -48,7 +48,7 @@ export default function ProfilePhotoUpload({ initialPhoto }: { initialPhoto: str
 
   return (
     <section className="flex flex-col gap-5 border-b border-slate-200 pb-8 sm:flex-row sm:items-center" aria-busy={uploading}>
-      <div className="relative flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-full bg-slate-100 ring-4 ring-cyan-50">
+      <div className="relative flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-full bg-slate-100 ring-4 ring-emerald-50">
         {photo && !imageFailed ? (
           <Image src={photo} alt="Foto profil Anda" fill unoptimized className="object-cover" onError={() => setImageFailed(true)} />
         ) : <UserRound className="h-12 w-12 text-slate-400" aria-label="Belum ada foto profil" />}
@@ -57,7 +57,7 @@ export default function ProfilePhotoUpload({ initialPhoto }: { initialPhoto: str
         <h2 className="text-xl font-bold text-slate-900">Foto Profil</h2>
         <p id="profile-photo-help" className="text-sm text-slate-500">JPG, PNG, atau WebP, maksimal 2 MB. Foto otomatis disimpan setelah dipilih.</p>
         <input ref={inputRef} type="file" accept={PROFILE_PHOTO_TYPES.join(",")} onChange={uploadPhoto} disabled={uploading} className="hidden" aria-label="Pilih foto profil" aria-describedby="profile-photo-help" />
-        <button type="button" onClick={() => inputRef.current?.click()} disabled={uploading} className="inline-flex items-center gap-2 rounded-xl bg-cyan-600 px-4 py-2 font-semibold text-white transition hover:bg-cyan-700 disabled:cursor-wait disabled:opacity-60">
+        <button type="button" onClick={() => inputRef.current?.click()} disabled={uploading} className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-wait disabled:opacity-60">
           <Camera className="h-4 w-4" aria-hidden="true" />
           <span aria-live="polite">{uploading ? "Mengunggah..." : photo ? "Ganti Foto" : "Unggah Foto"}</span>
         </button>

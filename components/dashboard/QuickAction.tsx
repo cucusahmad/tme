@@ -34,7 +34,7 @@ export default function QuickAction() {
           <Link
             key={menu.title}
             href={menu.href}
-            className="rounded-2xl border border-cyan-500/20 bg-white/5 p-8 transition hover:border-cyan-400 hover:bg-white/10"
+            className="rounded-2xl border border-emerald-500/20 bg-white/5 p-8 transition hover:border-emerald-400 hover:bg-white/10"
           >
             <h3 className="text-lg font-semibold text-white">
               {menu.title}
